@@ -50,10 +50,10 @@ public class Transaction {
     public String decideType(int choice){
         String type = "";
         switch(choice){
-            case 4: type = "Deposit"; break;
-            case 5: type = "Withdraw"; break;
-            case 6: type = "Transfer"; break;
-            case 7: type = "Debt"; break;
+            case 1: type = "Deposit"; break;
+            case 2: type = "Withdraw"; break;
+            case 3: type = "Transfer"; break;
+            case 4: type = "Debt"; break;
         }
         return type;
     }

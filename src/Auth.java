@@ -19,13 +19,15 @@ public class Auth {
             PreparedStatement prepareStatement = connection.prepareStatement(query);
             prepareStatement.setString(1, username);
             ResultSet resultSet = prepareStatement.executeQuery();
-            if(!(resultSet.next()) || !(BCrypt.checkpw(password, resultSet.getString("password")))) throw new SQLException("Username or password is incorrect.");
+            if(!(resultSet.next())) throw new SQLException("No such user exists.");
+            else if(!(BCrypt.checkpw(password, resultSet.getString("password")))) throw new SQLException("Username or password is incorrect.");
 
             query = "SELECT * FROM bank.users WHERE username = ?";
             prepareStatement = connection.prepareStatement(query);
             prepareStatement.setString(1, username);
             resultSet = prepareStatement.executeQuery();
             System.out.println("Login successful...");
+            resultSet.next();
             return new User(resultSet.getInt("iduser"),
                     resultSet.getString("username"),
                     resultSet.getString("password"),

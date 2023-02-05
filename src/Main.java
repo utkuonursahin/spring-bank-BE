@@ -9,10 +9,7 @@ public class Main {
                 Bank.menu();
                 int operation = Bank.chooseOperation();
                 while(operation != 0){
-                    if(operation == 1) usr.accDetails();
-                    else if(operation == 2) Auth.changePassword(connection, usr);
-                    else if(operation == 3) Transaction.listMyTransactions(connection, usr);
-                    else {
+                    if(operation > 0 && operation < 5){
                         Transaction transaction = new Transaction(operation, usr);
                         if(transaction.isTransactionValid(usr)){
                             transaction.transactionDetails();
@@ -21,9 +18,15 @@ public class Main {
                             usr = Auth.refreshSession(connection, usr);
                         } else System.out.println("Transaction not valid. Try again.");
                     }
+                    else if(operation == 5) usr.accDetails();
+                    else if(operation == 6) Transaction.listMyTransactions(connection, usr);
+                    else if(operation == 7) Auth.changePassword(connection, usr);
+                    else if(operation == 8) usr.accDelete(connection);
                     Bank.menu();
                     operation = Bank.chooseOperation();
                 }
+                System.out.println("Thank you for visiting the Bank of Java!");
+                System.exit(0);
             } else Bank.onboard(connection);
         } catch(SQLException error){System.out.println("Error: " + error.getMessage());}
     }

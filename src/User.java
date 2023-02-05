@@ -37,4 +37,19 @@ public class User {
         System.out.print("Balance: " + this.balance);
         System.out.print(" | "+"Debt: " + this.debt);
     }
+
+    public void accDelete(Connection connection) throws SQLException {
+        System.out.println("Are you sure you want to delete your account? (Y/N)");
+        Scanner scanner = new Scanner(System.in);
+        String answer = scanner.nextLine();
+        if(!answer.toUpperCase().equals("Y")) return;
+        try {
+            String sql = "DELETE FROM users WHERE iduser = ?";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1, this.userID);
+            int rowsDeleted = statement.executeUpdate();
+            if (rowsDeleted > 0) System.out.println("Your account was deleted successfully!");
+            System.exit(0);
+        } catch (SQLException error) {throw new SQLException(error.getMessage());}
+    }
 }

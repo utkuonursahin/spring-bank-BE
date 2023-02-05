@@ -8,13 +8,14 @@ public class Bank {
     }
     public static void menu(){
         System.out.println("\nWhat would you like to do?");
-        System.out.println("1. View account details");
-        System.out.println("2. Change password");
-        System.out.println("3. List my transactions");
-        System.out.println("4. Deposit money");
-        System.out.println("5. Withdraw money");
-        System.out.println("6. Transfer money");
-        System.out.println("7. Pay debt");
+        System.out.println("1. Deposit money");
+        System.out.println("2. Withdraw money");
+        System.out.println("3. Transfer money");
+        System.out.println("4. Pay debt");
+        System.out.println("5. View account details");
+        System.out.println("6. List my transactions");
+        System.out.println("7. Change password");
+        System.out.println("8. Delete account");
         System.out.println("0. Exit");
     }
 
@@ -37,35 +38,9 @@ public class Bank {
     public static int chooseOperation(){
         Scanner scanner = new Scanner(System.in);
         int choice = scanner.nextInt();
-        switch(choice){
-            case 1:
-                System.out.println("View account details");
-                break;
-            case 2:
-                System.out.println("Change password");
-                break;
-            case 3:
-                System.out.println("List my transactions");
-                break;
-            case 4:
-                System.out.println("Deposit money");
-                break;
-            case 5:
-                System.out.println("Withdraw money");
-                break;
-            case 6:
-                System.out.println("Transfer money");
-                break;
-            case 7:
-                System.out.println("Pay debt");
-                break;
-            case 0:
-                System.out.println("Exit");
-                System.exit(0);
-                break;
-            default:
-                System.out.println("Invalid choice. Please try again.");
-                chooseOperation();
+        while(choice < 0 || choice > 8){
+            System.out.println("Invalid choice. Try again.");
+            choice = scanner.nextInt();
         }
         return choice;
     }
