@@ -68,10 +68,7 @@ public class Transaction {
     public int decideAmount(){
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter the amount: ");
-        int input = scanner.nextInt();
-        if(this.type.equals("Deposit") || this.type.equals("Transfer")) return input;
-        else if(this.type.equals("Withdraw") ||this.type.equals("Debt")) return -input;
-        else return 0;
+        return scanner.nextInt();
     }
 
     public boolean isTransactionValid(User user){
@@ -107,24 +104,31 @@ public class Transaction {
 
     public void updateAccounts(Connection connection) throws SQLException {
         try{
-            String sql = "UPDATE users SET balance = balance + ? WHERE iduser = ?";
+            String sql = "UPDATE users SET balance = balance + ? , debt = debt + ? WHERE iduser = ?";
             PreparedStatement statement = connection.prepareStatement(sql);
             if(this.type.equals("Transfer")) {
                 statement.setInt(1, this.amount);
-                statement.setInt(2, this.receiverID);
+                statement.setInt(2, 0);
+                statement.setInt(3, this.receiverID);
                 statement.executeUpdate();
                 statement.setInt(1, -this.amount);
-                statement.setInt(2, this.senderID);
+                statement.setInt(2, 0);
+                statement.setInt(3, this.senderID);
                 statement.executeUpdate();
-            }
-            else if(this.type.equals("Deposit")){
+            } else if(this.type.equals("Deposit")){
                 statement.setInt(1, this.amount);
-                statement.setInt(2, this.senderID);
+                statement.setInt(2, 0);
+                statement.setInt(3, this.senderID);
                 statement.executeUpdate();
-            }
-            else if(this.type.equals("Withdraw") || this.type.equals("Debt")){
-                statement.setInt(1, this.amount);
-                statement.setInt(2, this.senderID);
+            } else if(this.type.equals("Withdraw")){
+                statement.setInt(1, -this.amount);
+                statement.setInt(2, 0);
+                statement.setInt(3, this.senderID);
+                statement.executeUpdate();
+            } else if(this.type.equals("Debt")){
+                statement.setInt(1, -this.amount);
+                statement.setInt(2, -this.amount);
+                statement.setInt(3, this.senderID);
                 statement.executeUpdate();
             }
             System.out.println("Transactions made to accounts!");
