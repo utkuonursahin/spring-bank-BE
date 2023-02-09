@@ -19,8 +19,12 @@ public class Auth {
             PreparedStatement prepareStatement = connection.prepareStatement(query);
             prepareStatement.setString(1, username);
             ResultSet resultSet = prepareStatement.executeQuery();
-            if(!(resultSet.next())) throw new SQLException("No such user exists.");
-            else if(!(BCrypt.checkpw(password, resultSet.getString("password")))) throw new SQLException("Username or password is incorrect.");
+            if(!(resultSet.next())){
+                throw new SQLException("No such user exists.");
+            }
+            else if(!(BCrypt.checkpw(password, resultSet.getString("password")))){
+                throw new SQLException("Username or password is incorrect.");
+            }
 
             query = "SELECT * FROM bank.users WHERE username = ?";
             prepareStatement = connection.prepareStatement(query);
@@ -34,7 +38,9 @@ public class Auth {
                     resultSet.getInt("balance"),
                     resultSet.getInt("debt"));
         }
-        catch(SQLException error){throw new SQLException(error.getMessage());}
+        catch(SQLException error){
+            throw new SQLException(error.getMessage());
+        }
     }
 
     public static void signup(Connection connection) throws SQLException {
@@ -50,7 +56,9 @@ public class Auth {
             prepareStatement.setString(1, username);
             prepareStatement.setString(2, hashedPassword);
             prepareStatement.executeUpdate();
-        }catch (SQLException error){throw new SQLException(error.getMessage());}
+        }catch (SQLException error){
+            throw new SQLException(error.getMessage());
+        }
     }
 
     public static User refreshSession(Connection connection, User user) throws SQLException {
@@ -67,7 +75,9 @@ public class Auth {
                         resultSet.getInt("debt"));
             } else return null;
 
-        }catch (SQLException error){throw new SQLException(error.getMessage());}
+        }catch (SQLException error){
+            throw new SQLException(error.getMessage());
+        }
     }
 
     public static void changePassword(Connection connection, User user) throws SQLException {
@@ -82,8 +92,12 @@ public class Auth {
             prepareStatement.setInt(1, user.getUserID());
             ResultSet resultSet = prepareStatement.executeQuery();
 
-            if(resultSet.next() && !(BCrypt.checkpw(oldPassword, resultSet.getString("password")))) throw new SQLException("Old password is incorrect.");
-            else if(BCrypt.checkpw(newPassword, resultSet.getString("password"))) throw new SQLException("New password cannot be the same as the old password.");
+            if(resultSet.next() && !(BCrypt.checkpw(oldPassword, resultSet.getString("password")))){
+                throw new SQLException("Old password is incorrect.");
+            }
+            else if(BCrypt.checkpw(newPassword, resultSet.getString("password"))){
+                throw new SQLException("New password cannot be the same as the old password.");
+            }
             newPassword = BCrypt.hashpw(newPassword, BCrypt.gensalt(12));
             String updateQuery = "UPDATE bank.users SET password = ? WHERE iduser = ?";
 
@@ -91,6 +105,8 @@ public class Auth {
             prepareStatement.setString(1, newPassword);
             prepareStatement.setInt(2, user.getUserID());
             prepareStatement.executeUpdate();
-        }catch (SQLException error){throw new SQLException(error.getMessage());}
+        }catch (SQLException error){
+            throw new SQLException(error.getMessage());
+        }
     }
 }

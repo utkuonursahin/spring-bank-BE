@@ -32,7 +32,9 @@ public class Bank {
                 System.out.println("Thank you for visiting the Bank of Java!");
                 System.exit(0);
             }
-        }catch(SQLException error){throw new SQLException(error.getMessage());}
+        }catch(SQLException error){
+            throw new SQLException(error.getMessage());
+        }
     }
 
     public static int chooseOperation(){

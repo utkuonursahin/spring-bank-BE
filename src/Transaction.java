@@ -1,6 +1,12 @@
+import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.Data;
 import java.util.*;
 import java.sql.*;
 
+@Getter
+@Setter
 public class Transaction {
     private String transactionID;
     private String type;
@@ -16,20 +22,6 @@ public class Transaction {
         this.setReceiverID(decideReceiver());
         this.setAmount(decideAmount());
     }
-
-    //GETTERS
-    public String getTransactionID() {return transactionID;}
-    public String getType() {return type;}
-    public int getSenderID() {return senderID;}
-    public int getReceiverID() {return receiverID;}
-    public int getAmount() {return amount;}
-
-    //SETTERS
-    public void setTransactionID(String transactionID) {this.transactionID = transactionID;}
-    public void setType(String type) {this.type = type;}
-    public void setSenderID(int senderID) {this.senderID = senderID;}
-    public void setReceiverID(int receiverID) {this.receiverID = receiverID;}
-    public void setAmount(int amount) {this.amount = amount;}
 
     //METHODS
     public String generateTransactionID(){
@@ -99,7 +91,9 @@ public class Transaction {
             statement.setInt(5, this.amount);
             int rowsInserted = statement.executeUpdate();
             if(rowsInserted > 0) System.out.println("Transaction created successfully!");
-        } catch (SQLException error){throw new SQLException(error.getMessage());}
+        } catch (SQLException error){
+            throw new SQLException(error.getMessage());
+        }
     }
 
     public void updateAccounts(Connection connection) throws SQLException {
@@ -132,7 +126,9 @@ public class Transaction {
                 statement.executeUpdate();
             }
             System.out.println("Transactions made to accounts!");
-        } catch (SQLException error){throw new SQLException(error.getMessage());}
+        } catch (SQLException error){
+            throw new SQLException(error.getMessage());
+        }
     }
 
     public static void listMyTransactions(Connection connection, User usr) throws SQLException{
@@ -150,6 +146,8 @@ public class Transaction {
                 System.out.println("Amount: " + result.getInt("amount"));
                 System.out.println("--------------------------------------------------");
             }
-        } catch (SQLException error){throw new SQLException(error.getMessage());}
+        } catch (SQLException error){
+            throw new SQLException(error.getMessage());
+        }
     }
 }
