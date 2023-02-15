@@ -31,12 +31,15 @@ public class Auth {
             prepareStatement.setString(1, username);
             resultSet = prepareStatement.executeQuery();
             System.out.println("Login successful...");
-            resultSet.next();
-            return new User(resultSet.getInt("iduser"),
-                    resultSet.getString("username"),
-                    resultSet.getString("password"),
-                    resultSet.getInt("balance"),
-                    resultSet.getInt("debt"));
+            if(resultSet.next()){
+                return new User(resultSet.getInt("iduser"),
+                        resultSet.getString("username"),
+                        resultSet.getString("password"),
+                        resultSet.getInt("balance"),
+                        resultSet.getInt("debt"));
+            } else {
+                throw new SQLException("Something went wrong about connection.");
+            }
         }
         catch(SQLException error){
             throw new SQLException(error.getMessage());
@@ -61,20 +64,21 @@ public class Auth {
         }
     }
 
-    public static User refreshSession(Connection connection, User user) throws SQLException {
+    public static void refreshSession(Connection connection, User user) throws SQLException {
         try{
             String query = "SELECT * FROM bank.users WHERE iduser = ?";
             PreparedStatement prepareStatement = connection.prepareStatement(query);
             prepareStatement.setInt(1, user.getUserID());
             ResultSet resultSet = prepareStatement.executeQuery();
             if(resultSet.next()){
-                return new User(resultSet.getInt("iduser"),
-                        resultSet.getString("username"),
-                        resultSet.getString("password"),
-                        resultSet.getInt("balance"),
-                        resultSet.getInt("debt"));
-            } else return null;
-
+                user.setUserID(resultSet.getInt("iduser"));
+                user.setUsername(resultSet.getString("username"));
+                user.setPassword(resultSet.getString("password"));
+                user.setBalance(resultSet.getInt("balance"));
+                user.setDebt(resultSet.getInt("debt"));
+            } else{
+                throw new SQLException("Something went wrong about connection.");
+            }
         }catch (SQLException error){
             throw new SQLException(error.getMessage());
         }

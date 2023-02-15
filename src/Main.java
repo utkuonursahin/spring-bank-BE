@@ -15,19 +15,28 @@ public class Main {
                             transaction.transactionDetails();
                             transaction.executeTransaction(connection);
                             transaction.updateAccounts(connection);
-                            usr = Auth.refreshSession(connection, usr);
-                        } else System.out.println("Transaction not valid. Try again.");
+                            Auth.refreshSession(connection, usr);
+                        } else {
+                            System.out.println("Transaction not valid. Try again.");
+                        }
                     }
-                    else if(operation == 5) usr.accDetails();
-                    else if(operation == 6) Transaction.listMyTransactions(connection, usr);
-                    else if(operation == 7) Auth.changePassword(connection, usr);
-                    else if(operation == 8) usr.accDelete(connection);
+                    else if(operation == 5){
+                        usr.accDetails();
+                    } else if(operation == 6){
+                        Transaction.listMyTransactions(connection, usr);
+                    } else if(operation == 7){
+                        Auth.changePassword(connection, usr);
+                    } else if(operation == 8){
+                        usr.accDelete(connection);
+                    }
                     Bank.menu();
                     operation = Bank.chooseOperation();
                 }
                 System.out.println("Thank you for visiting the Bank of Java!");
                 System.exit(0);
-            } else Bank.onboard(connection);
+            } else{
+                Bank.onboard(connection);
+            }
         } catch(SQLException error){System.out.println("Error: " + error.getMessage());}
     }
 }

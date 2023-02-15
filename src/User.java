@@ -1,8 +1,8 @@
 import lombok.Getter;
 import lombok.Setter;
-
 import java.util.*;
 import java.sql.*;
+
 @Getter
 @Setter
 public class User {
@@ -39,8 +39,12 @@ public class User {
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setInt(1, this.userID);
             int rowsDeleted = statement.executeUpdate();
-            if (rowsDeleted > 0) System.out.println("Your account was deleted successfully!");
+            if (rowsDeleted > 0){
+                System.out.println("Your account was deleted successfully!");
+            }
             System.exit(0);
-        } catch (SQLException error) {throw new SQLException(error.getMessage());}
+        } catch (SQLException error) {
+            throw new SQLException(error.getMessage());
+        }
     }
 }

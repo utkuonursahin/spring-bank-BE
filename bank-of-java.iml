@@ -19,7 +19,7 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$USER_HOME$/Downloads/lombok.jar!/" />
+          <root url="jar://$MODULE_DIR$/../lombok.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />

@@ -1,7 +1,5 @@
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.Data;
 import java.util.*;
 import java.sql.*;
 
@@ -42,10 +40,18 @@ public class Transaction {
     public String decideType(int choice){
         String type = "";
         switch(choice){
-            case 1: type = "Deposit"; break;
-            case 2: type = "Withdraw"; break;
-            case 3: type = "Transfer"; break;
-            case 4: type = "Debt"; break;
+            case 1:
+                type = "Deposit";
+                break;
+            case 2:
+                type = "Withdraw";
+                break;
+            case 3:
+                type = "Transfer";
+                break;
+            case 4:
+                type = "Debt";
+                break;
         }
         return type;
     }
@@ -65,10 +71,15 @@ public class Transaction {
 
     public boolean isTransactionValid(User user){
         if(this.amount <= 0) return false;
-        else if(this.type.equals("Deposit") || this.type.equals("Withdraw")) return true;
-        else if(this.type.equals("Transfer") && this.senderID != this.receiverID) return true;
-        else if(this.type.equals("Transfer") && user.getDebt() > 0) return true;
-        else return false;
+        else if(this.type.equals("Deposit") || this.type.equals("Withdraw")){
+            return true;
+        } else if(this.type.equals("Transfer") && this.senderID != this.receiverID){
+            return true;
+        } else if (this.type.equals("Transfer") && user.getDebt() > 0){
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public void transactionDetails(){
@@ -90,7 +101,9 @@ public class Transaction {
             statement.setInt(4, this.receiverID);
             statement.setInt(5, this.amount);
             int rowsInserted = statement.executeUpdate();
-            if(rowsInserted > 0) System.out.println("Transaction created successfully!");
+            if(rowsInserted > 0){
+                System.out.println("Transaction created successfully!");
+            }
         } catch (SQLException error){
             throw new SQLException(error.getMessage());
         }
