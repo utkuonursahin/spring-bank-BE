@@ -44,7 +44,7 @@ public class TransactionController {
     public Transaction createTransaction(@RequestBody NewTransactionRequest req) {
         //Create a new transaction
         Transaction transaction = new Transaction();
-        transaction.setTransactionID(transaction.generateTransactionID());
+        transaction.setTransactionCode(transaction.generateTransactionCode());
         transaction.setType(req.type() == null ? " " : req.type());
         transaction.setSenderID(req.senderID() == null ? 0 : req.senderID());
         transaction.setReceiverID(req.receiverID() == null ? 0 : req.receiverID()   );

@@ -10,7 +10,7 @@ import java.util.Random;
 @Data
 public class Transaction {
     @Id
-    private String transactionID;
+    private String transactionCode;
     private String type;
     private Integer senderID;
     private Integer receiverID;
@@ -19,7 +19,7 @@ public class Transaction {
     public Transaction() {}
 
     ////// METHODS //////
-    public String generateTransactionID(){
+    public String generateTransactionCode(){
         Random random = new Random();
         int f4d = random.nextInt(10000);
         char[] chars = {'A','B','C','D','E','F','X','Y','Z','W','a','b','c','d','e','f','x','y','z','w'};
