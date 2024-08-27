@@ -1,6 +1,6 @@
-package com.utku.repositories;
+package me.utku.repositories;
 
-import com.utku.models.Transaction;
+import me.utku.models.Transaction;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

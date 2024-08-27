@@ -1,4 +1,4 @@
-package com.utku.models;
+package me.utku.models;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;

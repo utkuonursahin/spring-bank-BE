@@ -1,4 +1,4 @@
-package com.utku.records;
+package me.utku.records;
 
 public record NewUserRequest(
         String name,
