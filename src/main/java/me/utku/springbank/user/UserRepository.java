@@ -1,6 +1,6 @@
-package com.utku.repositories;
+package me.utku.springbank.user;
 
-import com.utku.models.User;
+import me.utku.springbank.models.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface UserRepository extends JpaRepository<User, Integer> {
