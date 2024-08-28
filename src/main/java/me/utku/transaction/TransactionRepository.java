@@ -1,4 +1,4 @@
-package me.utku.repositories;
+package me.utku.transaction;
 
 import me.utku.models.Transaction;
 import org.springframework.data.jpa.repository.JpaRepository;

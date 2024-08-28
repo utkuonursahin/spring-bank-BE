@@ -1,4 +1,4 @@
-package me.utku.records;
+package me.utku.transaction;
 
 public record NewTransactionRequest(
         String type,

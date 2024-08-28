@@ -1,8 +1,6 @@
-package me.utku.controllers;
+package me.utku.user;
 
 import me.utku.models.User;
-import me.utku.records.NewUserRequest;
-import me.utku.repositories.UserRepository;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

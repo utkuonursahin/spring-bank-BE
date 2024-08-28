@@ -1,10 +1,8 @@
-package me.utku.controllers;
+package me.utku.transaction;
 
 import me.utku.models.Transaction;
 import me.utku.models.User;
-import me.utku.records.NewTransactionRequest;
-import me.utku.repositories.TransactionRepository;
-import me.utku.repositories.UserRepository;
+import me.utku.user.UserRepository;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
