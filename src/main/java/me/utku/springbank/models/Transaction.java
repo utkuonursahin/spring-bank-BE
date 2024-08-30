@@ -1,6 +1,7 @@
 package me.utku.springbank.models;
 
-import jakarta.persistence.Entity;
+import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import me.utku.springbank.transaction.TransactionType;
@@ -10,18 +11,16 @@ import java.math.BigDecimal;
 @Entity
 @Getter
 @Setter
+@Builder
 public class Transaction extends BaseEntity{
+    @Enumerated(EnumType.STRING)
     private TransactionType type;
-    private User sender;
-    private User receiver;
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Account sender;
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Account receiver;
     private BigDecimal amount;
 
-    public Transaction(TransactionType type, User sender, User receiver, BigDecimal amount) {
-        this.type = type;
-        this.sender = sender;
-        this.receiver = receiver;
-        this.amount = amount;
+    public Transaction() {
     }
-
-    public Transaction() {}
 }
