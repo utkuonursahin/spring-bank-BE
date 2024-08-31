@@ -1,9 +1,11 @@
 package me.utku.springbank.config;
 
 import lombok.RequiredArgsConstructor;
+import me.utku.springbank.auth.Role;
 import me.utku.springbank.user.service.UserReadService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -45,11 +47,14 @@ public class SecurityConfig {
                 .requestCache(RequestCacheConfigurer::disable)
                 .authorizeHttpRequests(req ->
                         req.requestMatchers(
-                                        "/api/auth/register/**",
-                                        "/api/auth/login/**",
-                                        "/api/auth/logout",
-                                        "/api/auth/is-authenticated"
+                                        "/api/v1/auth/register/**",
+                                        "/api/v1/auth/login/**",
+                                        "/api/v1/auth/logout",
+                                        "/api/v1/auth/is-authenticated"
                                 ).permitAll()
+                                .requestMatchers(
+                                        HttpMethod.POST, "/api/v1/user"
+                                ).hasRole(Role.ADMIN.getAuthority())
                                 .anyRequest().denyAll()
                 )
                 .logout(logout -> logout
