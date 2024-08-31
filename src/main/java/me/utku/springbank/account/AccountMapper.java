@@ -1,4 +1,4 @@
-package me.utku.springbank.user;
+package me.utku.springbank.account;
 
 import me.utku.springbank.generic.BaseMapper;
 import org.mapstruct.Mapper;
@@ -6,10 +6,10 @@ import org.mapstruct.MappingTarget;
 import org.mapstruct.NullValuePropertyMappingStrategy;
 
 @Mapper(componentModel = "spring", nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-public interface UserMapper extends BaseMapper<User> {
-    UserDto toDto(User user);
+public interface AccountMapper extends BaseMapper<Account> {
+    AccountDto toDto(Account entity);
 
-    User toEntity(UserDto userDto);
+    Account toEntity(AccountDto dto);
 
-    User updateEntity(@MappingTarget User oldEntity, User newEntity);
+    Account updateEntity(@MappingTarget Account oldEntity, Account newEntity);
 }

@@ -1,4 +1,4 @@
-package me.utku.springbank.models;
+package me.utku.springbank.generic;
 
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
