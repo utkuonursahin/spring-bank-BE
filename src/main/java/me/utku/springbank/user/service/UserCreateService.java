@@ -1,8 +1,41 @@
 package me.utku.springbank.user.service;
 
+import lombok.RequiredArgsConstructor;
+import me.utku.springbank.auth.Role;
+import me.utku.springbank.generic.GenericResponse;
+import me.utku.springbank.user.*;
+import org.springframework.http.HttpStatus;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-@Service
-public class UserCreateService {
+import java.util.Set;
 
+@Service
+@RequiredArgsConstructor
+public class UserCreateService {
+    private final UserRepository userRepository;
+    private final UserMapper userMapper;
+    private final BCryptPasswordEncoder passwordEncoder;
+
+    public GenericResponse<UserDto> registerUser(UserRegisterDto userRegisterDto) {
+        User registeredUser = userRepository.save(this.buildUserFromRegisterDto(userRegisterDto));
+        return this.generateResponse(userMapper.toDto(registeredUser));
+    }
+
+    private User buildUserFromRegisterDto(UserRegisterDto userRegisterDto) {
+        return User.builder()
+                .firstName(userRegisterDto.firstName())
+                .lastName(userRegisterDto.lastName())
+                .ssn(userRegisterDto.ssn())
+                .password(passwordEncoder.encode(userRegisterDto.password()))
+                .authorities(Set.of(Role.USER)).build();
+    }
+
+    private GenericResponse<UserDto> generateResponse(UserDto userDto) {
+        return GenericResponse.<UserDto>builder()
+                .statusCode(HttpStatus.CREATED.value())
+                .message("User registered successfully")
+                .data(userDto).build();
+    }
 }
+

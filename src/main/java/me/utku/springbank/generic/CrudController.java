@@ -1,23 +1,24 @@
 package me.utku.springbank.generic;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.UUID;
 
-@RestController
+/**
+ * Generic CRUD controller for all entities.
+ * @param <Entity>
+ * @apiNote This class is abstract and should be extended by a concrete controller.
+ */
+@RequiredArgsConstructor
 public abstract class CrudController<Entity> {
     private final CrudService<Entity> crudService;
 
-    protected CrudController(CrudService<Entity> crudService) {
-        this.crudService = crudService;
-    }
-    
     @GetMapping
+    @PreAuthorize("hasRole('ADMIN')")
     public List<BaseDto<Entity>> getAll() {
         return crudService.getEntities();
     }
@@ -30,5 +31,17 @@ public abstract class CrudController<Entity> {
     @PostMapping
     public ResponseEntity<GenericResponse<BaseDto<Entity>>> createEntity(BaseDto<Entity> dto) {
         return crudService.createEntity(dto).toResponseEntity();
+    }
+
+    @PatchMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<GenericResponse<BaseDto<Entity>>> updateEntity(UUID id, BaseDto<Entity> dto) {
+        return crudService.updateEntity(id, dto).toResponseEntity();
+    }
+
+    @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<GenericResponse<Boolean>> deleteEntity(UUID id) {
+        return crudService.deleteEntity(id).toResponseEntity();
     }
 }
