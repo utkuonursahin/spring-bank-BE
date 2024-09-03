@@ -10,6 +10,7 @@ import java.util.UUID;
 
 /**
  * Generic CRUD controller for all entities.
+ *
  * @param <Entity>
  * @apiNote This class is abstract and should be extended by a concrete controller.
  */
@@ -35,13 +36,13 @@ public abstract class CrudController<Entity> {
 
     @PatchMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<GenericResponse<BaseDto<Entity>>> updateEntity(UUID id, BaseDto<Entity> dto) {
+    public ResponseEntity<GenericResponse<BaseDto<Entity>>> updateEntity(@PathVariable UUID id, BaseDto<Entity> dto) {
         return crudService.updateEntity(id, dto).toResponseEntity();
     }
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<GenericResponse<Boolean>> deleteEntity(UUID id) {
+    public ResponseEntity<GenericResponse<Boolean>> deleteEntity(@PathVariable UUID id) {
         return crudService.deleteEntity(id).toResponseEntity();
     }
 }

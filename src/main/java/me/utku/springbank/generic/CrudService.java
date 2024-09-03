@@ -10,6 +10,7 @@ import java.util.UUID;
 
 /**
  * Generic service for basic CRUD operations.
+ *
  * @param <Entity>
  * @apiNote This class is abstract and should be extended by a crud service per domain.
  */
