@@ -1,7 +1,7 @@
 package me.utku.springbank.account;
 
 import me.utku.springbank.generic.BaseDto;
-import me.utku.springbank.user.UserDto;
+import me.utku.springbank.user.dto.UserDto;
 
 import java.math.BigDecimal;
 

@@ -2,6 +2,8 @@ package me.utku.springbank.user;
 
 import me.utku.springbank.generic.CrudController;
 import me.utku.springbank.generic.GenericResponse;
+import me.utku.springbank.user.dto.UserDto;
+import me.utku.springbank.user.dto.UserRegisterDto;
 import me.utku.springbank.user.service.UserCreateService;
 import me.utku.springbank.user.service.UserCrudService;
 import me.utku.springbank.user.service.UserReadService;

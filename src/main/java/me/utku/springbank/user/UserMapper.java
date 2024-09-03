@@ -1,6 +1,7 @@
 package me.utku.springbank.user;
 
 import me.utku.springbank.generic.BaseMapper;
+import me.utku.springbank.user.dto.UserDto;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.NullValuePropertyMappingStrategy;

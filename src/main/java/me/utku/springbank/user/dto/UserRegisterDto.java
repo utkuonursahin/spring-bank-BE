@@ -1,4 +1,4 @@
-package me.utku.springbank.user;
+package me.utku.springbank.user.dto;
 
 public record UserRegisterDto(
         String firstName,

@@ -1,9 +1,9 @@
 package me.utku.springbank.user.service;
 
 import lombok.RequiredArgsConstructor;
-import me.utku.springbank.user.UserDto;
 import me.utku.springbank.user.UserMapper;
 import me.utku.springbank.user.UserRepository;
+import me.utku.springbank.user.dto.UserDto;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

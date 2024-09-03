@@ -43,4 +43,9 @@ public class AuthService {
             throw new BadCredentialsException("Failed authentication with ssn:" + loginRequest.ssn());
         }
     }
+
+    public GenericResponse<BaseDto<User>> checkSession(User user) {
+        BaseDto<User> userDto = userMapper.toDto(user);
+        return GenericResponse.<BaseDto<User>>builder().statusCode(HttpStatus.OK.value()).data(userDto).build();
+    }
 }
