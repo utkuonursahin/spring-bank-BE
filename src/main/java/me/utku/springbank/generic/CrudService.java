@@ -33,8 +33,8 @@ public abstract class CrudService<Entity> {
     }
 
     public GenericResponse<BaseDto<Entity>> updateEntity(UUID id, BaseDto<Entity> newEntity) {
-        Entity existingEntity = repository.findById(id).orElseThrow(EntityNotFoundException::new);
-        Entity updatedEntity = mapper.updateEntity(mapper.toEntity(newEntity), existingEntity);
+        Entity oldEntity = repository.findById(id).orElseThrow(EntityNotFoundException::new);
+        Entity updatedEntity = mapper.updateEntity(oldEntity, mapper.toEntity(newEntity));
         updatedEntity = repository.save(updatedEntity);
         return new GenericResponse<>(HttpStatus.OK.value(), "Entity updated successfully", mapper.toDto(updatedEntity));
     }
