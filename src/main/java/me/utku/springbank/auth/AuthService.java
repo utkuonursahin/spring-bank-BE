@@ -38,7 +38,7 @@ public class AuthService {
                 securityContextRepository.saveContext(context, request, response);
                 userDto = userMapper.toDto(((User) authentication.getPrincipal()));
             }
-            return GenericResponse.<BaseDto<User>>builder().statusCode(HttpStatus.OK.value()).data(userDto).build();
+            return new GenericResponse<>(HttpStatus.OK.value(), "Authentication successful", userDto);
         } catch (Exception e) {
             throw new BadCredentialsException("Failed authentication with ssn:" + loginRequest.ssn());
         }
@@ -46,6 +46,6 @@ public class AuthService {
 
     public GenericResponse<BaseDto<User>> checkSession(User user) {
         BaseDto<User> userDto = userMapper.toDto(user);
-        return GenericResponse.<BaseDto<User>>builder().statusCode(HttpStatus.OK.value()).data(userDto).build();
+        return new GenericResponse<>(HttpStatus.OK.value(), "Session is valid", userDto);
     }
 }

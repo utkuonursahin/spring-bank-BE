@@ -9,7 +9,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.utku</groupId>
-    <artifactId>spring-bank</artifactId>
+    <artifactId>spring-bank-BE</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>spring-bank</name>
     <description>Spring Bank with Spring Boot</description>

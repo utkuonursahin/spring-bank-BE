@@ -23,7 +23,7 @@ public class UserCreateService {
 
     public GenericResponse<UserDto> registerUser(UserRegisterDto userRegisterDto) {
         User registeredUser = userRepository.save(this.buildUserFromRegisterDto(userRegisterDto));
-        return this.generateResponse(userMapper.toDto(registeredUser));
+        return new GenericResponse<>(HttpStatus.CREATED.value(), "User registered successfully", userMapper.toDto(registeredUser));
     }
 
     private User buildUserFromRegisterDto(UserRegisterDto userRegisterDto) {
@@ -33,13 +33,6 @@ public class UserCreateService {
                 .ssn(userRegisterDto.ssn())
                 .password(passwordEncoder.encode(userRegisterDto.password()))
                 .authorities(Set.of(Role.USER)).build();
-    }
-
-    private GenericResponse<UserDto> generateResponse(UserDto userDto) {
-        return GenericResponse.<UserDto>builder()
-                .statusCode(HttpStatus.CREATED.value())
-                .message("User registered successfully")
-                .data(userDto).build();
     }
 }
 
