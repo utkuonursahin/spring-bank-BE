@@ -6,8 +6,10 @@ import me.utku.springbank.transaction.Transaction;
 import me.utku.springbank.transaction.TransactionType;
 
 import java.math.BigDecimal;
+import java.util.UUID;
 
 public record TransactionDto(
+        UUID id,
         TransactionType transactionType,
         AccountDto sender,
         AccountDto receiver,
