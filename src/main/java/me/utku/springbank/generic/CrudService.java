@@ -29,40 +29,19 @@ public abstract class CrudService<Entity> {
 
     public GenericResponse<BaseDto<Entity>> createEntity(BaseDto<Entity> dto) {
         Entity savedEntity = repository.save(mapper.toEntity(dto));
-        return this.generateCreatedResponse(mapper.toDto(savedEntity));
+        return new GenericResponse<>(HttpStatus.CREATED.value(), "Entity created successfully", mapper.toDto(savedEntity));
     }
 
     public GenericResponse<BaseDto<Entity>> updateEntity(UUID id, BaseDto<Entity> newEntity) {
-        Entity existingEntity = repository.findById(id).orElseThrow(EntityNotFoundException::new);
-        Entity updatedEntity = mapper.updateEntity(mapper.toEntity(newEntity), existingEntity);
+        Entity oldEntity = repository.findById(id).orElseThrow(EntityNotFoundException::new);
+        Entity updatedEntity = mapper.updateEntity(oldEntity, mapper.toEntity(newEntity));
         updatedEntity = repository.save(updatedEntity);
-        return generateUpdateResponse(mapper.toDto(updatedEntity));
+        return new GenericResponse<>(HttpStatus.OK.value(), "Entity updated successfully", mapper.toDto(updatedEntity));
     }
 
     public GenericResponse<Boolean> deleteEntity(UUID id) {
         Entity entity = repository.findById(id).orElseThrow(EntityNotFoundException::new);
         repository.delete(entity);
-        return generateDeleteResponse();
-    }
-
-    private GenericResponse<BaseDto<Entity>> generateCreatedResponse(BaseDto<Entity> dto) {
-        return GenericResponse.<BaseDto<Entity>>builder()
-                .statusCode(HttpStatus.CREATED.value())
-                .message("Entity created successfully")
-                .data(dto).build();
-    }
-
-    private GenericResponse<BaseDto<Entity>> generateUpdateResponse(BaseDto<Entity> dto) {
-        return GenericResponse.<BaseDto<Entity>>builder()
-                .statusCode(HttpStatus.OK.value())
-                .message("Entity updated successfully")
-                .data(dto).build();
-    }
-
-    private GenericResponse<Boolean> generateDeleteResponse() {
-        return GenericResponse.<Boolean>builder()
-                .statusCode(HttpStatus.OK.value())
-                .message("Entity deleted successfully")
-                .data(true).build();
+        return new GenericResponse<>(HttpStatus.OK.value(), "Entity deleted successfully", true);
     }
 }
