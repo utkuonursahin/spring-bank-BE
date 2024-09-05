@@ -15,11 +15,11 @@ import java.util.UUID;
  * @apiNote This class is abstract and should be extended by a concrete controller.
  */
 @RequiredArgsConstructor
+@PreAuthorize("hasRole('ADMIN')")
 public abstract class CrudController<Entity> {
     private final CrudService<Entity> crudService;
 
     @GetMapping
-    @PreAuthorize("hasRole('ADMIN')")
     public List<BaseDto<Entity>> getAll() {
         return crudService.getEntities();
     }
@@ -35,13 +35,11 @@ public abstract class CrudController<Entity> {
     }
 
     @PatchMapping("/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<GenericResponse<BaseDto<Entity>>> updateEntity(@PathVariable UUID id, BaseDto<Entity> dto) {
         return crudService.updateEntity(id, dto).toResponseEntity();
     }
 
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<GenericResponse<Boolean>> deleteEntity(@PathVariable UUID id) {
         return crudService.deleteEntity(id).toResponseEntity();
     }

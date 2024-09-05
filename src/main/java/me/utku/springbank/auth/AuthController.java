@@ -7,7 +7,6 @@ import me.utku.springbank.generic.BaseDto;
 import me.utku.springbank.generic.GenericResponse;
 import me.utku.springbank.user.User;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,7 +23,6 @@ public class AuthController {
     }
 
     @GetMapping("/check-session")
-    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<GenericResponse<BaseDto<User>>> checkSession(@AuthenticationPrincipal User user) {
         GenericResponse<BaseDto<User>> authResponse = authService.checkSession(user);
         return authResponse.toResponseEntity();
