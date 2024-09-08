@@ -33,7 +33,7 @@ public class AccountController extends CrudController<Account> {
 
     @PostMapping("/me")
     @PreAuthorize("hasRole('USER')")
-    public ResponseEntity<GenericResponse<AccountDto>> createAccountForUser(@AuthenticationPrincipal User user, @RequestBody AccountDto accountDto) {
-        return accountCreateService.createAccountForUser(user, accountDto).toResponseEntity();
+    public ResponseEntity<GenericResponse<AccountDto>> createAccountForUser(@AuthenticationPrincipal User user, @RequestBody AccountDto account) {
+        return accountCreateService.createAccountForUser(user, account).toResponseEntity();
     }
 }

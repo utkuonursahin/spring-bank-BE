@@ -21,7 +21,7 @@ public class UserCreateService {
     private final UserMapper userMapper;
     private final BCryptPasswordEncoder passwordEncoder;
 
-    public GenericResponse<UserDto> registerUser(UserRegisterDto userRegisterDto) {
+    public GenericResponse<UserDto> createUser(UserRegisterDto userRegisterDto) {
         User registeredUser = userRepository.save(this.buildUserFromRegisterDto(userRegisterDto));
         return new GenericResponse<>(HttpStatus.CREATED.value(), "User registered successfully", userMapper.toDto(registeredUser));
     }
