@@ -31,7 +31,7 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<GenericResponse<UserDto>> register(UserRegisterDto user) {
+    public ResponseEntity<GenericResponse<UserDto>> register(@RequestBody UserRegisterDto user) {
         return authService.registerUser(user).toResponseEntity();
     }
 }
