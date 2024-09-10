@@ -7,6 +7,9 @@ import me.utku.springbank.generic.BaseDto;
 import me.utku.springbank.generic.GenericResponse;
 import me.utku.springbank.user.User;
 import me.utku.springbank.user.UserMapper;
+import me.utku.springbank.user.dto.UserDto;
+import me.utku.springbank.user.dto.UserRegisterDto;
+import me.utku.springbank.user.service.UserCreateService;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -24,6 +27,7 @@ public class AuthService {
     private final AuthenticationManager authenticationManager;
     private final SecurityContextRepository securityContextRepository;
     private final SecurityContextHolderStrategy securityContextHolderStrategy = SecurityContextHolder.getContextHolderStrategy();
+    private final UserCreateService userCreateService;
     private final UserMapper userMapper;
 
     public GenericResponse<BaseDto<User>> authenticate(LoginRequest loginRequest, HttpServletRequest request, HttpServletResponse response) {
@@ -42,6 +46,10 @@ public class AuthService {
         } catch (Exception e) {
             throw new BadCredentialsException("Failed authentication with ssn:" + loginRequest.ssn());
         }
+    }
+
+    public GenericResponse<UserDto> registerUser(UserRegisterDto userRegisterDto) {
+        return userCreateService.createUser(userRegisterDto);
     }
 
     public GenericResponse<BaseDto<User>> checkSession(User user) {

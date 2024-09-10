@@ -23,23 +23,19 @@ public class User extends BaseEntity implements UserDetails {
     private String password;
     @ElementCollection(fetch = FetchType.LAZY)
     @Enumerated(EnumType.STRING)
-    private Set<Role> authorities;
+    @Column(name = "role")
+    private Set<Role> authorities = Set.of(Role.USER);
 
-    private boolean accountNonExpired;
-    private boolean accountNonLocked;
-    private boolean credentialsNonExpired;
-    private boolean enabled;
+    private boolean accountNonExpired = true;
+    private boolean accountNonLocked = true;
+    private boolean credentialsNonExpired = true;
+    private boolean enabled = true;
 
-    public User(String firstName, String lastName, String ssn, String password, Set<Role> authorities, boolean accountNonExpired, boolean accountNonLocked, boolean credentialsNonExpired, boolean enabled) {
+    public User(String firstName, String lastName, String ssn, String password) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.ssn = ssn;
         this.password = password;
-        this.authorities = authorities;
-        this.accountNonExpired = accountNonExpired;
-        this.accountNonLocked = accountNonLocked;
-        this.credentialsNonExpired = credentialsNonExpired;
-        this.enabled = enabled;
     }
 
     public User() {

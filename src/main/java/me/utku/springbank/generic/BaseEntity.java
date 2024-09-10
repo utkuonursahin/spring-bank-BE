@@ -25,6 +25,4 @@ public class BaseEntity {
 
     @UpdateTimestamp
     private Instant updatedAt;
-
-    private boolean isVisible = true;
 }

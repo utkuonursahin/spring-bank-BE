@@ -45,7 +45,7 @@ public class SecurityConfig {
                 .requestCache(RequestCacheConfigurer::disable)
                 .authorizeHttpRequests(req ->
                         req.requestMatchers(
-                                        "/api/v1/user/register/**",
+                                        "/api/v1/auth/register/**",
                                         "/api/v1/auth/login/**",
                                         "/api/v1/auth/logout"
                                 ).permitAll()
