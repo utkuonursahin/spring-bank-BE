@@ -19,19 +19,19 @@ public class User extends BaseEntity implements UserDetails {
     private String firstName;
     private String lastName;
     @Column(unique = true)
-    private String ssn;
+    private long ssn;
     private String password;
-    @ElementCollection(fetch = FetchType.LAZY)
+    @ElementCollection(fetch = FetchType.EAGER)
     @Enumerated(EnumType.STRING)
     @Column(name = "role")
-    private Set<Role> authorities = Set.of(Role.USER);
+    private Set<Role> authorities = Set.of(Role.ROLE_USER);
 
     private boolean accountNonExpired = true;
     private boolean accountNonLocked = true;
     private boolean credentialsNonExpired = true;
     private boolean enabled = true;
 
-    public User(String firstName, String lastName, String ssn, String password) {
+    public User(String firstName, String lastName, long ssn, String password) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.ssn = ssn;
@@ -44,5 +44,11 @@ public class User extends BaseEntity implements UserDetails {
     @Override
     public String getUsername() {
         return "";
+    }
+
+    public static class UserBuilder {
+        public User build() {
+            return new User(this.firstName, this.lastName, this.ssn, this.password);
+        }
     }
 }
