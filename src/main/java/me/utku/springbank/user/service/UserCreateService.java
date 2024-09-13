@@ -30,7 +30,7 @@ public class UserCreateService {
         return User.builder()
                 .firstName(userRegisterDto.firstName())
                 .lastName(userRegisterDto.lastName())
-                .ssn(Long.parseLong(userRegisterDto.ssn()))
+                .ssn(userRegisterDto.ssn())
                 .password(passwordEncoder.encode(userRegisterDto.password()))
                 .authorities(Set.of(Role.ROLE_USER)).build();
     }
