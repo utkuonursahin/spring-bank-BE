@@ -32,7 +32,7 @@ public class UserCreateService {
                 .lastName(userRegisterDto.lastName())
                 .ssn(userRegisterDto.ssn())
                 .password(passwordEncoder.encode(userRegisterDto.password()))
-                .authorities(Set.of(Role.USER)).build();
+                .authorities(Set.of(Role.ROLE_USER)).build();
     }
 }
 
