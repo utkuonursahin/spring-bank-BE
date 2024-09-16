@@ -1,7 +1,6 @@
 package me.utku.springbank.transaction.service;
 
 import lombok.RequiredArgsConstructor;
-import me.utku.springbank.account.AccountDto;
 import me.utku.springbank.transaction.Transaction;
 import me.utku.springbank.transaction.TransactionMapper;
 import me.utku.springbank.transaction.TransactionRepository;
@@ -9,7 +8,6 @@ import me.utku.springbank.transaction.dto.TransactionPageDto;
 import me.utku.springbank.user.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;
@@ -25,15 +23,23 @@ public class TransactionReadService {
         return transactionMapper.toPageDto(transactions);
     }
 
-    public TransactionPageDto getTransactionsSentByUserAccount(User user, AccountDto account, int page, int size) {
-        if (!account.owner().id().equals(user.getId()))
-            throw new AccessDeniedException("You are not allowed to view transactions for this account");
-        Page<Transaction> transactions = transactionRepository.findAllBySender_Id(account.id(), PageRequest.of(page, size));
+    public TransactionPageDto getTransactionsBySenderOwner(UUID senderOwnerId, int page, int size) {
+        Page<Transaction> transactions = transactionRepository.findAllBySender_Owner_Id(senderOwnerId, PageRequest.of(page, size));
         return transactionMapper.toPageDto(transactions);
     }
 
-    public TransactionPageDto getTransactionsBySenderOwner(UUID senderOwnerId, int page, int size) {
-        Page<Transaction> transactions = transactionRepository.findAllBySender_Owner_Id(senderOwnerId, PageRequest.of(page, size));
+    public TransactionPageDto getUserTransactions(User senderOwner, User receiverOwner, int page, int size) {
+        Page<Transaction> transactions = transactionRepository.findAllBySender_OwnerOrReceiver_Owner(senderOwner, receiverOwner, PageRequest.of(page, size));
+        return transactionMapper.toPageDto(transactions);
+    }
+
+    public TransactionPageDto getTransactionsSentByUser(User user, int page, int size) {
+        Page<Transaction> transactions = transactionRepository.findAllBySender_Owner(user, PageRequest.of(page, size));
+        return transactionMapper.toPageDto(transactions);
+    }
+
+    public TransactionPageDto getTransactionsReceivedByUser(User user, int page, int size) {
+        Page<Transaction> transactions = transactionRepository.findAllByReceiverOwner(user, PageRequest.of(page, size));
         return transactionMapper.toPageDto(transactions);
     }
 }

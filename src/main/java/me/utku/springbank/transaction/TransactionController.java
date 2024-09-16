@@ -1,6 +1,5 @@
 package me.utku.springbank.transaction;
 
-import me.utku.springbank.account.AccountDto;
 import me.utku.springbank.generic.CrudController;
 import me.utku.springbank.generic.GenericResponse;
 import me.utku.springbank.transaction.dto.TransactionDto;
@@ -43,13 +42,19 @@ public class TransactionController extends CrudController<Transaction> {
     @GetMapping("/me")
     @PreAuthorize("hasRole('USER')")
     public TransactionPageDto getUserTransactions(@AuthenticationPrincipal User user, @RequestParam int page, @RequestParam int size) {
-        return transactionReadService.getTransactionsBySenderOwner(user.getId(), page, size);
+        return transactionReadService.getUserTransactions(user, user, page, size);
     }
 
     @GetMapping("/me/sender")
     @PreAuthorize("hasRole('USER')")
-    public TransactionPageDto getUserTransactionsSentByUserAccount(@AuthenticationPrincipal User user, AccountDto account, @RequestParam int page, @RequestParam int size) {
-        return transactionReadService.getTransactionsSentByUserAccount(user, account, page, size);
+    public TransactionPageDto getUserTransactionsSentByUser(@AuthenticationPrincipal User user, @RequestParam int page, @RequestParam int size) {
+        return transactionReadService.getTransactionsSentByUser(user, page, size);
+    }
+
+    @GetMapping("/me/receiver")
+    @PreAuthorize("hasRole('USER')")
+    public TransactionPageDto getUserTransactionsReceivedByUser(@AuthenticationPrincipal User user, @RequestParam int page, @RequestParam int size) {
+        return transactionReadService.getTransactionsReceivedByUser(user, page, size);
     }
 
     @PostMapping("/me")
