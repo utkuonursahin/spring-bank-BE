@@ -27,16 +27,16 @@ public class TransactionController extends CrudController<Transaction> {
         this.transactionCreateService = transactionCreateService;
     }
 
-    @GetMapping("/sender")
+    @GetMapping("/account")
     @PreAuthorize("hasRole('ADMIN')")
-    public TransactionPageDto getTransactionsBySender(UUID senderId, @RequestParam int page, @RequestParam int size) {
-        return transactionReadService.getTransactionsBySender(senderId, page, size);
+    public TransactionPageDto getTransactionsByAccount(UUID senderId, @RequestParam int page, @RequestParam int size) {
+        return transactionReadService.getTransactionsByAccount(senderId, page, size);
     }
 
-    @GetMapping("/sender-owner")
+    @GetMapping("/account-owner")
     @PreAuthorize("hasRole('ADMIN')")
-    public TransactionPageDto getTransactionsBySenderOwner(UUID senderOwnerId, @RequestParam int page, @RequestParam int size) {
-        return transactionReadService.getTransactionsBySenderOwner(senderOwnerId, page, size);
+    public TransactionPageDto getTransactionsByAccountOwner(UUID ownerId, @RequestParam int page, @RequestParam int size) {
+        return transactionReadService.getTransactionsByAccountOwner(ownerId, page, size);
     }
 
     @GetMapping("/me")

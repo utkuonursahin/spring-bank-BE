@@ -18,13 +18,13 @@ public class TransactionReadService {
     private final TransactionRepository transactionRepository;
     private final TransactionMapper transactionMapper;
 
-    public TransactionPageDto getTransactionsBySender(UUID senderId, int page, int size) {
-        Page<Transaction> transactions = transactionRepository.findAllBySender_Id(senderId, PageRequest.of(page, size));
+    public TransactionPageDto getTransactionsByAccount(UUID accountId, int page, int size) {
+        Page<Transaction> transactions = transactionRepository.findAllBySender_IdOrReceiver_Id(accountId, accountId, PageRequest.of(page, size));
         return transactionMapper.toPageDto(transactions);
     }
 
-    public TransactionPageDto getTransactionsBySenderOwner(UUID senderOwnerId, int page, int size) {
-        Page<Transaction> transactions = transactionRepository.findAllBySender_Owner_Id(senderOwnerId, PageRequest.of(page, size));
+    public TransactionPageDto getTransactionsByAccountOwner(UUID ownerId, int page, int size) {
+        Page<Transaction> transactions = transactionRepository.findAllBySender_Owner_IdOrReceiver_Owner_Id(ownerId, ownerId, PageRequest.of(page, size));
         return transactionMapper.toPageDto(transactions);
     }
 
