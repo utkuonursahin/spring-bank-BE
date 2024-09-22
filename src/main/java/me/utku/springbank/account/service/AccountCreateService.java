@@ -18,10 +18,11 @@ public class AccountCreateService {
     private final AccountRepository accountRepository;
     private final AccountMapper accountMapper;
 
-    public GenericResponse<AccountDto> createAccountForUser(User user, AccountDto accountDto) {
-        Account account = accountMapper.toEntity(accountDto);
-        account.setOwner(user);
-        account.setCash(BigDecimal.valueOf(0.0));
+    public GenericResponse<AccountDto> createAccountForUser(User user) {
+        Account account = Account.builder()
+                .owner(user)
+                .cash(BigDecimal.valueOf(0.0))
+                .build();
         account = accountRepository.save(account);
         return new GenericResponse<>(HttpStatus.CREATED.value(), "Account created successfully", accountMapper.toDto(account));
     }

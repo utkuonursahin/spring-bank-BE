@@ -49,8 +49,7 @@ public class SecurityConfig {
                                         "/api/v1/auth/login/**",
                                         "/api/v1/auth/logout"
                                 ).permitAll()
-                                .requestMatchers("/api/v1/auth/check-session").authenticated()
-                                .anyRequest().denyAll()
+                                .anyRequest().authenticated()
                 )
                 .logout(logout -> logout
                         .logoutUrl("/api/auth/logout")

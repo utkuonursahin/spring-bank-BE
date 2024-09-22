@@ -19,7 +19,7 @@ public class UserReadService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String ssn) throws UsernameNotFoundException {
-        return userRepository.findBySsn(Long.parseLong(ssn)).orElseThrow(() -> new UsernameNotFoundException("User not found!"));
+        return userRepository.findBySsn(ssn).orElseThrow(() -> new UsernameNotFoundException("User not found!"));
     }
 
     public UserDto getMe(UUID id) {

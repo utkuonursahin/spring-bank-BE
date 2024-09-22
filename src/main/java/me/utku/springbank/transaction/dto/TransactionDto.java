@@ -10,7 +10,7 @@ import java.util.UUID;
 
 public record TransactionDto(
         UUID id,
-        TransactionType transactionType,
+        TransactionType type,
         AccountDto sender,
         AccountDto receiver,
         BigDecimal amount

@@ -1,4 +1,4 @@
-package me.utku;
+package me.utku.springbank;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

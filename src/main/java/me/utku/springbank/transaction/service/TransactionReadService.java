@@ -18,28 +18,28 @@ public class TransactionReadService {
     private final TransactionRepository transactionRepository;
     private final TransactionMapper transactionMapper;
 
-    public TransactionPageDto getTransactionsByAccount(UUID accountId, int page, int size) {
+    public TransactionPageDto getAccountTransactions(UUID accountId, int page, int size) {
         Page<Transaction> transactions = transactionRepository.findAllBySender_IdOrReceiver_Id(accountId, accountId, PageRequest.of(page, size));
         return transactionMapper.toPageDto(transactions);
     }
 
-    public TransactionPageDto getTransactionsByAccountOwner(UUID ownerId, int page, int size) {
+    public TransactionPageDto getAccountOwnerTransactions(UUID ownerId, int page, int size) {
         Page<Transaction> transactions = transactionRepository.findAllBySender_Owner_IdOrReceiver_Owner_Id(ownerId, ownerId, PageRequest.of(page, size));
         return transactionMapper.toPageDto(transactions);
     }
 
-    public TransactionPageDto getUserTransactions(User senderOwner, User receiverOwner, int page, int size) {
-        Page<Transaction> transactions = transactionRepository.findAllBySender_OwnerOrReceiver_Owner(senderOwner, receiverOwner, PageRequest.of(page, size));
+    public TransactionPageDto getUserTransactions(User user, int page, int size) {
+        Page<Transaction> transactions = transactionRepository.findAllBySender_Owner_IdOrReceiver_Owner_Id(user.getId(), user.getId(), PageRequest.of(page, size));
         return transactionMapper.toPageDto(transactions);
     }
 
     public TransactionPageDto getTransactionsSentByUser(User user, int page, int size) {
-        Page<Transaction> transactions = transactionRepository.findAllBySender_Owner(user, PageRequest.of(page, size));
+        Page<Transaction> transactions = transactionRepository.findAllBySender_Owner_Id(user.getId(), PageRequest.of(page, size));
         return transactionMapper.toPageDto(transactions);
     }
 
     public TransactionPageDto getTransactionsReceivedByUser(User user, int page, int size) {
-        Page<Transaction> transactions = transactionRepository.findAllByReceiverOwner(user, PageRequest.of(page, size));
+        Page<Transaction> transactions = transactionRepository.findAllByReceiverOwner_Id(user.getId(), PageRequest.of(page, size));
         return transactionMapper.toPageDto(transactions);
     }
 }
