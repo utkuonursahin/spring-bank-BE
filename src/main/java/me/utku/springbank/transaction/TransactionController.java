@@ -27,22 +27,22 @@ public class TransactionController extends CrudController<Transaction> {
         this.transactionCreateService = transactionCreateService;
     }
 
-    @GetMapping("/sender")
+    @GetMapping("/account")
     @PreAuthorize("hasRole('ADMIN')")
-    public TransactionPageDto getTransactionsBySender(UUID senderId, @RequestParam int page, @RequestParam int size) {
-        return transactionReadService.getTransactionsBySender(senderId, page, size);
+    public TransactionPageDto getAccountTransactions(UUID accountId, @RequestParam int page, @RequestParam int size) {
+        return transactionReadService.getAccountTransactions(accountId, page, size);
     }
 
-    @GetMapping("/sender-owner")
+    @GetMapping("/account-owner")
     @PreAuthorize("hasRole('ADMIN')")
-    public TransactionPageDto getTransactionsBySenderOwner(UUID senderOwnerId, @RequestParam int page, @RequestParam int size) {
-        return transactionReadService.getTransactionsBySenderOwner(senderOwnerId, page, size);
+    public TransactionPageDto getAccountOwnerTransactions(UUID ownerId, @RequestParam int page, @RequestParam int size) {
+        return transactionReadService.getAccountOwnerTransactions(ownerId, page, size);
     }
 
     @GetMapping("/me")
     @PreAuthorize("hasRole('USER')")
     public TransactionPageDto getUserTransactions(@AuthenticationPrincipal User user, @RequestParam int page, @RequestParam int size) {
-        return transactionReadService.getUserTransactions(user, user, page, size);
+        return transactionReadService.getUserTransactions(user, page, size);
     }
 
     @GetMapping("/me/sender")
@@ -59,7 +59,7 @@ public class TransactionController extends CrudController<Transaction> {
 
     @PostMapping("/me")
     @PreAuthorize("hasRole('USER')")
-    public ResponseEntity<GenericResponse<TransactionDto>> createTransactionForUser(@AuthenticationPrincipal User user, @RequestBody TransactionDto transaction) {
-        return transactionCreateService.createTransactionForUser(user, transaction).toResponseEntity();
+    public ResponseEntity<GenericResponse<TransactionDto>> createTransactionForUser(@AuthenticationPrincipal User user, @RequestBody TransactionDto transactionRequest) {
+        return transactionCreateService.createTransactionForUser(user, transactionRequest).toResponseEntity();
     }
 }

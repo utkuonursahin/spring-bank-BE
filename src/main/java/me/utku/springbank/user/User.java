@@ -19,7 +19,7 @@ public class User extends BaseEntity implements UserDetails {
     private String firstName;
     private String lastName;
     @Column(unique = true)
-    private long ssn;
+    private String ssn;
     private String password;
     @ElementCollection(fetch = FetchType.EAGER)
     @Enumerated(EnumType.STRING)
@@ -31,7 +31,7 @@ public class User extends BaseEntity implements UserDetails {
     private boolean credentialsNonExpired = true;
     private boolean enabled = true;
 
-    public User(String firstName, String lastName, long ssn, String password) {
+    public User(String firstName, String lastName, String ssn, String password) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.ssn = ssn;
