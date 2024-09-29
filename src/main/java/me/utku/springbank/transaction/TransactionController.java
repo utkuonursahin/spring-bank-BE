@@ -57,9 +57,9 @@ public class TransactionController extends CrudController<Transaction> {
         return transactionReadService.getTransactionsReceivedByUser(user, page, size);
     }
 
-    @PostMapping("/me")
+    @PostMapping("/me/transfer")
     @PreAuthorize("hasRole('USER')")
-    public ResponseEntity<GenericResponse<TransactionDto>> createTransactionForUser(@AuthenticationPrincipal User user, @RequestBody TransactionDto transactionRequest) {
-        return transactionCreateService.createTransactionForUser(user, transactionRequest).toResponseEntity();
+    public ResponseEntity<GenericResponse<TransactionDto>> createTransferTransactionForUser(@AuthenticationPrincipal User user, @RequestBody TransactionDto transactionRequest) {
+        return transactionCreateService.createTransferTransactionForUser(user, transactionRequest).toResponseEntity();
     }
 }
