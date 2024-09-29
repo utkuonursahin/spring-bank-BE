@@ -70,6 +70,12 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return new GenericResponse<>(HttpStatus.NOT_FOUND.value(), "Entity not found.", false).toResponseEntity();
     }
 
+    @ExceptionHandler(OperationDeniedException.class)
+    public ResponseEntity<GenericResponse<Boolean>> operationDeniedExceptionHandler(OperationDeniedException e) {
+        log.info("OperationDeniedException: {}.", e.getMessage());
+        return new GenericResponse<>(HttpStatus.FORBIDDEN.value(), "Operation denied: " + e.getMessage(), false).toResponseEntity();
+    }
+
     @ExceptionHandler(Exception.class)
     public ResponseEntity<GenericResponse<Boolean>> unhandledExceptionHandler(Exception e) {
         log.info("Exception (UNHANDLED): {}.", e.getMessage());
