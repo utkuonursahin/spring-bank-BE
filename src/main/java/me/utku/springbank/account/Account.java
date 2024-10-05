@@ -16,7 +16,7 @@ import java.math.BigDecimal;
 @Setter
 @Builder
 public class Account extends BaseEntity {
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     private User owner;
     private BigDecimal cash;
 
