@@ -13,7 +13,7 @@ import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
-public class UserReadService implements UserDetailsService {
+public class UserQueryService implements UserDetailsService {
     private final UserRepository userRepository;
     private final UserMapper userMapper;
 

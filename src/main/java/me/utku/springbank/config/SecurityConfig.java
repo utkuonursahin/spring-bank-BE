@@ -1,7 +1,7 @@
 package me.utku.springbank.config;
 
 import lombok.RequiredArgsConstructor;
-import me.utku.springbank.user.service.UserReadService;
+import me.utku.springbank.user.service.UserQueryService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -32,7 +32,7 @@ import java.util.List;
 @EnableMethodSecurity
 @RequiredArgsConstructor
 public class SecurityConfig {
-    private final UserReadService userReadService;
+    private final UserQueryService userQueryService;
     private final HandlerExceptionResolver handlerExceptionResolver;
 
     @Bean
@@ -77,7 +77,7 @@ public class SecurityConfig {
     @Bean
     public AuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
-        authenticationProvider.setUserDetailsService(userReadService);
+        authenticationProvider.setUserDetailsService(userQueryService);
         authenticationProvider.setPasswordEncoder(bCryptPasswordEncoder());
         return authenticationProvider;
     }

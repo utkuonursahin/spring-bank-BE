@@ -1,14 +1,12 @@
-package me.utku.springbank.user.service;
+package me.utku.springbank.user.service.action;
 
 import lombok.RequiredArgsConstructor;
 import me.utku.springbank.auth.Role;
-import me.utku.springbank.generic.GenericResponse;
 import me.utku.springbank.user.User;
 import me.utku.springbank.user.UserMapper;
 import me.utku.springbank.user.UserRepository;
 import me.utku.springbank.user.dto.UserDto;
 import me.utku.springbank.user.dto.UserRegisterDto;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -16,14 +14,13 @@ import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
-public class UserCreateService {
+public class CreateUserService {
     private final UserRepository userRepository;
     private final UserMapper userMapper;
     private final BCryptPasswordEncoder passwordEncoder;
 
-    public GenericResponse<UserDto> createUser(UserRegisterDto userRegisterDto) {
-        User registeredUser = userRepository.save(this.buildUserFromRegisterDto(userRegisterDto));
-        return new GenericResponse<>(HttpStatus.CREATED.value(), "User registered successfully", userMapper.toDto(registeredUser));
+    public UserDto createUser(UserRegisterDto userRegisterDto) {
+        return userMapper.toDto(userRepository.save(this.buildUserFromRegisterDto(userRegisterDto)));
     }
 
     private User buildUserFromRegisterDto(UserRegisterDto userRegisterDto) {
@@ -35,4 +32,3 @@ public class UserCreateService {
                 .authorities(Set.of(Role.ROLE_USER)).build();
     }
 }
-
