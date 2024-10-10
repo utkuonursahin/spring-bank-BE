@@ -16,7 +16,7 @@ import java.util.UUID;
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
-public class TransactionReadService {
+public class TransactionQueryService {
     private final TransactionRepository transactionRepository;
     private final TransactionMapper transactionMapper;
 

@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 import me.utku.springbank.account.Account;
 import me.utku.springbank.generic.BaseEntity;
+import me.utku.springbank.transaction.enums.TransactionType;
 
 import java.math.BigDecimal;
 
