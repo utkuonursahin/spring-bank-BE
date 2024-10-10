@@ -14,7 +14,7 @@ import java.util.UUID;
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
-public class AccountReadService {
+public class AccountQueryService {
     private final AccountRepository accountRepository;
     private final AccountMapper accountMapper;
 

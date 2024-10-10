@@ -3,6 +3,7 @@ package me.utku.springbank.auth;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import me.utku.springbank.auth.service.AuthService;
 import me.utku.springbank.generic.BaseDto;
 import me.utku.springbank.generic.GenericResponse;
 import me.utku.springbank.user.User;

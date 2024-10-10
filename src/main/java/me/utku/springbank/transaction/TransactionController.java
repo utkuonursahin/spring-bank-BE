@@ -4,9 +4,9 @@ import me.utku.springbank.generic.CrudController;
 import me.utku.springbank.generic.GenericResponse;
 import me.utku.springbank.transaction.dto.TransactionDto;
 import me.utku.springbank.transaction.dto.TransactionPageDto;
-import me.utku.springbank.transaction.service.TransactionCreateService;
 import me.utku.springbank.transaction.service.TransactionCrudService;
-import me.utku.springbank.transaction.service.TransactionReadService;
+import me.utku.springbank.transaction.service.TransactionQueryService;
+import me.utku.springbank.transaction.service.TransactionService;
 import me.utku.springbank.user.User;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -18,48 +18,48 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/api/v1/transaction")
 public class TransactionController extends CrudController<Transaction> {
-    private final TransactionReadService transactionReadService;
-    private final TransactionCreateService transactionCreateService;
+    private final TransactionQueryService transactionQueryService;
+    private final TransactionService transactionService;
 
-    public TransactionController(TransactionCrudService transactionCrudService, TransactionReadService transactionReadService, TransactionCreateService transactionCreateService) {
+    public TransactionController(TransactionCrudService transactionCrudService, TransactionQueryService transactionQueryService, TransactionService transactionService) {
         super(transactionCrudService);
-        this.transactionReadService = transactionReadService;
-        this.transactionCreateService = transactionCreateService;
+        this.transactionQueryService = transactionQueryService;
+        this.transactionService = transactionService;
     }
 
     @GetMapping("/account")
     @PreAuthorize("hasRole('ADMIN')")
     public TransactionPageDto getAccountTransactions(UUID accountId, @RequestParam int page, @RequestParam int size) {
-        return transactionReadService.getAccountTransactions(accountId, page, size);
+        return transactionQueryService.getAccountTransactions(accountId, page, size);
     }
 
     @GetMapping("/account-owner")
     @PreAuthorize("hasRole('ADMIN')")
     public TransactionPageDto getAccountOwnerTransactions(UUID ownerId, @RequestParam int page, @RequestParam int size) {
-        return transactionReadService.getAccountOwnerTransactions(ownerId, page, size);
+        return transactionQueryService.getAccountOwnerTransactions(ownerId, page, size);
     }
 
     @GetMapping("/me")
     @PreAuthorize("hasRole('USER')")
     public TransactionPageDto getUserTransactions(@AuthenticationPrincipal User user, @RequestParam int page, @RequestParam int size) {
-        return transactionReadService.getUserTransactions(user, page, size);
+        return transactionQueryService.getUserTransactions(user, page, size);
     }
 
     @GetMapping("/me/sender")
     @PreAuthorize("hasRole('USER')")
     public TransactionPageDto getUserTransactionsSentByUser(@AuthenticationPrincipal User user, @RequestParam int page, @RequestParam int size) {
-        return transactionReadService.getTransactionsSentByUser(user, page, size);
+        return transactionQueryService.getTransactionsSentByUser(user, page, size);
     }
 
     @GetMapping("/me/receiver")
     @PreAuthorize("hasRole('USER')")
     public TransactionPageDto getUserTransactionsReceivedByUser(@AuthenticationPrincipal User user, @RequestParam int page, @RequestParam int size) {
-        return transactionReadService.getTransactionsReceivedByUser(user, page, size);
+        return transactionQueryService.getTransactionsReceivedByUser(user, page, size);
     }
 
     @PostMapping("/me/transfer")
     @PreAuthorize("hasRole('USER')")
     public ResponseEntity<GenericResponse<TransactionDto>> createTransferTransactionForUser(@AuthenticationPrincipal User user, @RequestBody TransactionDto transactionRequest) {
-        return transactionCreateService.createTransferTransactionForUser(user, transactionRequest).toResponseEntity();
+        return transactionService.createTransferTransactionForUser(user, transactionRequest).toResponseEntity();
     }
 }
