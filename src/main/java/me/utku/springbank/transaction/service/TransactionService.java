@@ -15,6 +15,6 @@ public class TransactionService {
 
     public GenericResponse<TransactionDto> createTransferTransactionForUser(User user, TransactionDto transactionRequest) {
         TransactionDto createdTransaction = createTransferTransactionService.createTransferTransactionForUser(user, transactionRequest);
-        return new GenericResponse<>(HttpStatus.CREATED.value(), createdTransaction);
+        return GenericResponse.ok(HttpStatus.CREATED.value(), createdTransaction);
     }
 }

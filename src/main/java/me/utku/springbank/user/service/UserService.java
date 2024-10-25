@@ -15,6 +15,6 @@ public class UserService {
 
     public GenericResponse<UserDto> createUser(UserRegisterDto userRegisterDto) {
         UserDto registeredUser = createUserService.createUser(userRegisterDto);
-        return new GenericResponse<>(HttpStatus.CREATED.value(), registeredUser);
+        return GenericResponse.ok(HttpStatus.CREATED.value(), registeredUser);
     }
 }
