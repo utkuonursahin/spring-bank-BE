@@ -11,7 +11,7 @@ import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
-public class TransferCashService {
+public class TransferMoneyService {
     private final AccountRepository accountRepository;
 
     public void transferMoneyBetweenAccounts(UUID senderId, UUID receiverId, BigDecimal amount) {

@@ -3,7 +3,7 @@ package me.utku.springbank.auth.service;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
-import me.utku.springbank.auth.LoginRequest;
+import me.utku.springbank.auth.LoginRequestDto;
 import me.utku.springbank.generic.BaseDto;
 import me.utku.springbank.generic.GenericResponse;
 import me.utku.springbank.user.User;
@@ -11,7 +11,6 @@ import me.utku.springbank.user.UserMapper;
 import me.utku.springbank.user.dto.UserDto;
 import me.utku.springbank.user.dto.UserRegisterDto;
 import me.utku.springbank.user.service.UserService;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -31,10 +30,10 @@ public class AuthService {
     private final UserService userService;
     private final UserMapper userMapper;
 
-    public GenericResponse<BaseDto<User>> authenticate(LoginRequest loginRequest, HttpServletRequest request, HttpServletResponse response) {
+    public GenericResponse<BaseDto<User>> authenticate(LoginRequestDto loginRequestDto, HttpServletRequest request, HttpServletResponse response) {
         BaseDto<User> userDto = null;
         try {
-            UsernamePasswordAuthenticationToken authToken = UsernamePasswordAuthenticationToken.unauthenticated(loginRequest.ssn(), loginRequest.password());
+            UsernamePasswordAuthenticationToken authToken = UsernamePasswordAuthenticationToken.unauthenticated(loginRequestDto.ssn(), loginRequestDto.password());
             Authentication authentication = authenticationManager.authenticate(authToken);
             if (authentication.isAuthenticated()) {
                 SecurityContext context = securityContextHolderStrategy.createEmptyContext();
@@ -43,9 +42,9 @@ public class AuthService {
                 securityContextRepository.saveContext(context, request, response);
                 userDto = userMapper.toDto(((User) authentication.getPrincipal()));
             }
-            return new GenericResponse<>(HttpStatus.OK.value(), userDto);
+            return GenericResponse.ok(userDto);
         } catch (Exception e) {
-            throw new BadCredentialsException("Failed authentication with ssn:" + loginRequest.ssn());
+            throw new BadCredentialsException("Failed authentication with ssn:" + loginRequestDto.ssn());
         }
     }
 
@@ -55,6 +54,6 @@ public class AuthService {
 
     public GenericResponse<BaseDto<User>> checkSession(User user) {
         BaseDto<User> userDto = userMapper.toDto(user);
-        return new GenericResponse<>(HttpStatus.OK.value(), userDto);
+        return GenericResponse.ok(userDto);
     }
 }

@@ -26,8 +26,8 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<GenericResponse<BaseDto<User>>> login(@RequestBody LoginRequest loginRequest, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
-        GenericResponse<BaseDto<User>> authResponse = authService.authenticate(loginRequest, httpServletRequest, httpServletResponse);
+    public ResponseEntity<GenericResponse<BaseDto<User>>> login(@RequestBody LoginRequestDto loginRequestDto, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
+        GenericResponse<BaseDto<User>> authResponse = authService.authenticate(loginRequestDto, httpServletRequest, httpServletResponse);
         return authResponse.toResponseEntity();
     }
 

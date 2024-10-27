@@ -26,59 +26,59 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
     @Override
     protected ResponseEntity<Object> handleNoResourceFoundException(NoResourceFoundException ex, @NonNull HttpHeaders headers, @NonNull HttpStatusCode status, @NonNull WebRequest request) {
-        return ResponseEntity.status(status).body(new GenericResponse<>(status.value(), ex.getMessage(), false));
+        return ResponseEntity.status(status).body(GenericResponse.error(status.value(), ex.getMessage()));
     }
 
     @Override
     protected ResponseEntity<Object> handleExceptionInternal(Exception ex, Object body, @NonNull HttpHeaders headers, @NonNull HttpStatusCode status, @NonNull WebRequest request) {
-        return ResponseEntity.status(status).body(new GenericResponse<>(status.value(), ex.getMessage(), false));
+        return ResponseEntity.status(status).body(GenericResponse.error(status.value(), ex.getMessage()));
     }
 
     @ExceptionHandler(DataIntegrityViolationException.class)
-    public ResponseEntity<GenericResponse<Boolean>> dataIntegrityViolationExceptionHandler(DataIntegrityViolationException e) {
+    public ResponseEntity<GenericResponse<Object>> dataIntegrityViolationExceptionHandler(DataIntegrityViolationException e) {
         log.info("DataIntegrityViolationException: {}.", e.getMessage());
-        return new GenericResponse<>(HttpStatus.CONFLICT.value(), "Data integrity violation.", false).toResponseEntity();
+        return GenericResponse.error(HttpStatus.CONFLICT.value(), "Data integrity violation.").toResponseEntity();
     }
 
     @ExceptionHandler(UsernameNotFoundException.class)
-    public ResponseEntity<GenericResponse<Boolean>> usernameNotFoundExceptionHandler(UsernameNotFoundException e) {
+    public ResponseEntity<GenericResponse<Object>> usernameNotFoundExceptionHandler(UsernameNotFoundException e) {
         log.info("UsernameNotFoundException: {}.", e.getMessage());
-        return new GenericResponse<>(HttpStatus.UNAUTHORIZED.value(), "No user found with this username.", false).toResponseEntity();
+        return GenericResponse.error(HttpStatus.UNAUTHORIZED.value(), "No user found with this username.").toResponseEntity();
     }
 
     @ExceptionHandler(BadCredentialsException.class)
-    public ResponseEntity<GenericResponse<Boolean>> badCredentialsExceptionHandler(BadCredentialsException e) {
+    public ResponseEntity<GenericResponse<Object>> badCredentialsExceptionHandler(BadCredentialsException e) {
         log.info("BadCredentialsException: {}.", e.getMessage());
-        return new GenericResponse<>(HttpStatus.UNAUTHORIZED.value(), "No match for this username / password.", false).toResponseEntity();
+        return GenericResponse.error(HttpStatus.UNAUTHORIZED.value(), "No user found with this username or password.").toResponseEntity();
     }
 
     @ExceptionHandler(AccessDeniedException.class)
-    public ResponseEntity<GenericResponse<Boolean>> accessDeniedExceptionHandler(AccessDeniedException e) {
+    public ResponseEntity<GenericResponse<Object>> accessDeniedExceptionHandler(AccessDeniedException e) {
         log.info("AccessDeniedException: {}.", e.getMessage());
-        return new GenericResponse<>(HttpStatus.FORBIDDEN.value(), "You don't have rights to access this resource.", false).toResponseEntity();
+        return GenericResponse.error(HttpStatus.FORBIDDEN.value(), "You don't have rights to access this resource.").toResponseEntity();
     }
 
     @ExceptionHandler(InsufficientAuthenticationException.class)
-    public ResponseEntity<GenericResponse<Boolean>> insufficientAuthenticationExceptionHandler(InsufficientAuthenticationException e) {
+    public ResponseEntity<GenericResponse<Object>> insufficientAuthenticationExceptionHandler(InsufficientAuthenticationException e) {
         log.info("InsufficientAuthenticationException: {}.", e.getMessage());
-        return new GenericResponse<>(HttpStatus.UNAUTHORIZED.value(), "Authentication failed. Be sure you enter your credentials correctly or have rights to access this resource!", false).toResponseEntity();
+        return GenericResponse.error(HttpStatus.UNAUTHORIZED.value(), "You need to be authenticated and have enough rights to access this resource.").toResponseEntity();
     }
 
     @ExceptionHandler(EntityNotFoundException.class)
-    public ResponseEntity<GenericResponse<Boolean>> entityNotFoundExceptionHandler(EntityNotFoundException e) {
+    public ResponseEntity<GenericResponse<Object>> entityNotFoundExceptionHandler(EntityNotFoundException e) {
         log.info("EntityNotFoundException: {}.", e.getMessage());
-        return new GenericResponse<>(HttpStatus.NOT_FOUND.value(), "Entity not found.", false).toResponseEntity();
+        return GenericResponse.error(HttpStatus.NOT_FOUND.value(), "Entity not found.").toResponseEntity();
     }
 
     @ExceptionHandler(OperationDeniedException.class)
-    public ResponseEntity<GenericResponse<Boolean>> operationDeniedExceptionHandler(OperationDeniedException e) {
+    public ResponseEntity<GenericResponse<Object>> operationDeniedExceptionHandler(OperationDeniedException e) {
         log.info("OperationDeniedException: {}.", e.getMessage());
-        return new GenericResponse<>(HttpStatus.FORBIDDEN.value(), "Operation denied: " + e.getMessage(), false).toResponseEntity();
+        return GenericResponse.error(HttpStatus.FORBIDDEN.value(), "Operation denied: " + e.getMessage()).toResponseEntity();
     }
 
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<GenericResponse<Boolean>> unhandledExceptionHandler(Exception e) {
+    public ResponseEntity<GenericResponse<Object>> unhandledExceptionHandler(Exception e) {
         log.info("Exception (UNHANDLED): {}.", e.getMessage());
-        return new GenericResponse<>(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Something went wrong. " + "(" + e.getMessage() + ")", false).toResponseEntity();
+        return GenericResponse.error(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Something went wrong. " + "(" + e.getMessage() + ")").toResponseEntity();
     }
 }

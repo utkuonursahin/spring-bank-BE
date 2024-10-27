@@ -29,19 +29,19 @@ public abstract class CrudService<Entity> {
 
     public GenericResponse<BaseDto<Entity>> createEntity(BaseDto<Entity> dto) {
         Entity savedEntity = repository.save(mapper.toEntity(dto));
-        return new GenericResponse<>(HttpStatus.CREATED.value(), mapper.toDto(savedEntity));
+        return GenericResponse.ok(HttpStatus.CREATED.value(), mapper.toDto(savedEntity));
     }
 
     public GenericResponse<BaseDto<Entity>> updateEntity(UUID id, BaseDto<Entity> newEntity) {
         Entity oldEntity = repository.findById(id).orElseThrow(EntityNotFoundException::new);
         Entity updatedEntity = mapper.updateEntity(oldEntity, mapper.toEntity(newEntity));
         updatedEntity = repository.save(updatedEntity);
-        return new GenericResponse<>(HttpStatus.OK.value(), mapper.toDto(updatedEntity));
+        return GenericResponse.ok(mapper.toDto(updatedEntity));
     }
 
     public GenericResponse<Boolean> deleteEntity(UUID id) {
         Entity entity = repository.findById(id).orElseThrow(EntityNotFoundException::new);
         repository.delete(entity);
-        return new GenericResponse<>(HttpStatus.OK.value(), true);
+        return GenericResponse.ok(true);
     }
 }
