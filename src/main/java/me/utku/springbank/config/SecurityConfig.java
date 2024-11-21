@@ -1,7 +1,7 @@
 package me.utku.springbank.config;
 
 import lombok.RequiredArgsConstructor;
-import me.utku.springbank.user.service.UserQueryService;
+import me.utku.springbank.service.user.UserQueryService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
