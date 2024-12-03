@@ -9,8 +9,6 @@ import me.utku.springbank.repository.AccountStockRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
-import java.util.UUID;
-
 @Service
 @RequiredArgsConstructor
 public class AccountStockService {

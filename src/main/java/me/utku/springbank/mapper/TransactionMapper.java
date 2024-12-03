@@ -1,9 +1,10 @@
 package me.utku.springbank.mapper;
 
-import me.utku.springbank.generic.BaseMapper;
-import me.utku.springbank.model.Transaction;
+import me.utku.springbank.dto.account.CashTransferRequest;
 import me.utku.springbank.dto.transaction.TransactionDto;
 import me.utku.springbank.dto.transaction.TransactionPageDto;
+import me.utku.springbank.generic.BaseMapper;
+import me.utku.springbank.model.Transaction;
 import org.mapstruct.*;
 import org.springframework.data.domain.Page;
 
@@ -17,4 +18,6 @@ public interface TransactionMapper extends BaseMapper<Transaction> {
 
     @Mapping(target = "transactions", source = "content")
     TransactionPageDto toPageDto(Page<Transaction> page);
+
+    Transaction toEntity(CashTransferRequest cashTransferRequest);
 }

@@ -4,12 +4,12 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import me.utku.springbank.dto.auth.LoginRequestDto;
-import me.utku.springbank.generic.BaseDto;
-import me.utku.springbank.generic.GenericResponse;
-import me.utku.springbank.model.User;
-import me.utku.springbank.mapper.UserMapper;
 import me.utku.springbank.dto.user.UserDto;
 import me.utku.springbank.dto.user.UserRegisterDto;
+import me.utku.springbank.generic.BaseDto;
+import me.utku.springbank.generic.GenericResponse;
+import me.utku.springbank.mapper.UserMapper;
+import me.utku.springbank.model.User;
 import me.utku.springbank.service.user.UserService;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -20,9 +20,11 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.context.SecurityContextHolderStrategy;
 import org.springframework.security.web.context.SecurityContextRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class AuthService {
     private final AuthenticationManager authenticationManager;
     private final SecurityContextRepository securityContextRepository;
@@ -55,5 +57,9 @@ public class AuthService {
     public GenericResponse<BaseDto<User>> checkSession(User user) {
         BaseDto<User> userDto = userMapper.toDto(user);
         return GenericResponse.ok(userDto);
+    }
+
+    public User getAuthenticatedUser() {
+        return (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     }
 }

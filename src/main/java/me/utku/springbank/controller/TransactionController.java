@@ -1,18 +1,18 @@
 package me.utku.springbank.controller;
 
-import me.utku.springbank.dto.transaction.TransactionDto;
 import me.utku.springbank.dto.transaction.TransactionPageDto;
 import me.utku.springbank.generic.CrudController;
-import me.utku.springbank.generic.GenericResponse;
 import me.utku.springbank.model.Transaction;
 import me.utku.springbank.model.User;
 import me.utku.springbank.service.transaction.TransactionCrudService;
 import me.utku.springbank.service.transaction.TransactionQueryService;
 import me.utku.springbank.service.transaction.TransactionService;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.UUID;
 
@@ -56,11 +56,5 @@ public class TransactionController extends CrudController<Transaction> {
     @PreAuthorize("hasRole('USER')")
     public TransactionPageDto getUserTransactionsReceivedByUser(@AuthenticationPrincipal User user, @RequestParam int page, @RequestParam int size) {
         return transactionQueryService.getTransactionsReceivedByUser(user, page, size);
-    }
-
-    @PostMapping("/me/transfer")
-    @PreAuthorize("hasRole('USER')")
-    public ResponseEntity<GenericResponse<TransactionDto>> createTransferTransactionForUser(@AuthenticationPrincipal User user, @RequestBody TransactionDto transactionRequest) {
-        return transactionService.createTransferTransactionForUser(user, transactionRequest).toResponseEntity();
     }
 }
