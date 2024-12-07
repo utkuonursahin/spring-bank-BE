@@ -4,11 +4,10 @@ import me.utku.springbank.dto.accountstock.AccountStockDto;
 import me.utku.springbank.generic.BaseMapper;
 import me.utku.springbank.model.AccountStock;
 import org.mapstruct.Mapper;
-import org.mapstruct.MappingConstants;
 import org.mapstruct.MappingTarget;
-import org.mapstruct.ReportingPolicy;
+import org.mapstruct.NullValuePropertyMappingStrategy;
 
-@Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, componentModel = MappingConstants.ComponentModel.SPRING)
+@Mapper(componentModel = "spring", nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
 public interface AccountStockMapper extends BaseMapper<AccountStock> {
     AccountStock toEntity(AccountStockDto accountStockDto);
 

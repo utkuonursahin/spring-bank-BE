@@ -11,6 +11,11 @@ import java.util.UUID;
 /**
  * DTO for {@link me.utku.springbank.model.AccountStock}
  */
-public record AccountStockDto(UUID id, AccountDto account, StockDto stock,
-                              BigDecimal quantity) implements BaseDto<AccountStock> {
+public record AccountStockDto(UUID id,
+                              AccountDto account,
+                              StockDto stock,
+                              BigDecimal quantity,
+                              BigDecimal value
+) implements BaseDto<AccountStock> {
+
 }

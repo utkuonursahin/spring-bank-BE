@@ -2,6 +2,7 @@ package me.utku.springbank.controller;
 
 import me.utku.springbank.dto.account.AccountDto;
 import me.utku.springbank.dto.account.CashTransferRequest;
+import me.utku.springbank.enums.account.AccountType;
 import me.utku.springbank.generic.CrudController;
 import me.utku.springbank.generic.GenericResponse;
 import me.utku.springbank.model.Account;
@@ -32,6 +33,12 @@ public class AccountController extends CrudController<Account> {
     @PreAuthorize("hasRole('USER')")
     public List<AccountDto> getUserAccounts(@AuthenticationPrincipal User user) {
         return accountQueryService.getUserAccounts(user.getId());
+    }
+
+    @GetMapping("/me/{accountType}")
+    @PreAuthorize("hasRole('USER')")
+    public AccountDto getUserAccountByType(@AuthenticationPrincipal User user, @PathVariable AccountType accountType) {
+        return accountQueryService.getUserAccountByType(user.getId(), accountType);
     }
 
     @PostMapping("/me")

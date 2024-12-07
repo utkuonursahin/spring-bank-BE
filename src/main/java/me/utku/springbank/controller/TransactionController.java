@@ -6,7 +6,6 @@ import me.utku.springbank.model.Transaction;
 import me.utku.springbank.model.User;
 import me.utku.springbank.service.transaction.TransactionCrudService;
 import me.utku.springbank.service.transaction.TransactionQueryService;
-import me.utku.springbank.service.transaction.TransactionService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,12 +19,10 @@ import java.util.UUID;
 @RequestMapping("/api/v1/transaction")
 public class TransactionController extends CrudController<Transaction> {
     private final TransactionQueryService transactionQueryService;
-    private final TransactionService transactionService;
 
-    public TransactionController(TransactionCrudService transactionCrudService, TransactionQueryService transactionQueryService, TransactionService transactionService) {
+    public TransactionController(TransactionCrudService transactionCrudService, TransactionQueryService transactionQueryService) {
         super(transactionCrudService);
         this.transactionQueryService = transactionQueryService;
-        this.transactionService = transactionService;
     }
 
     @GetMapping("/account")

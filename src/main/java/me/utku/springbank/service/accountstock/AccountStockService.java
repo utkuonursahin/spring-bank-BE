@@ -3,21 +3,21 @@ package me.utku.springbank.service.accountstock;
 import lombok.RequiredArgsConstructor;
 import me.utku.springbank.dto.accountstock.AccountStockDto;
 import me.utku.springbank.generic.GenericResponse;
-import me.utku.springbank.mapper.AccountStockMapper;
-import me.utku.springbank.model.AccountStock;
-import me.utku.springbank.repository.AccountStockRepository;
-import org.springframework.http.HttpStatus;
+import me.utku.springbank.service.accountstock.action.BuyAccountStockAction;
+import me.utku.springbank.service.accountstock.action.SellAccountStockAction;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
 public class AccountStockService {
-    private final AccountStockRepository accountStockRepository;
-    private final AccountStockMapper accountStockMapper;
+    private final BuyAccountStockAction buyAccountStockAction;
+    private final SellAccountStockAction sellAccountStockAction;
 
     public GenericResponse<AccountStockDto> buyAccountStock(AccountStockDto accountStockDto) {
-        AccountStock accountStock = accountStockMapper.toEntity(accountStockDto);
-        accountStockRepository.save(accountStock);
-        return GenericResponse.ok(HttpStatus.OK.value(), accountStockMapper.toDto(accountStock));
+        return buyAccountStockAction.execute(accountStockDto);
+    }
+
+    public GenericResponse<AccountStockDto> sellAccountStock(AccountStockDto accountStockDto) {
+        return sellAccountStockAction.execute(accountStockDto);
     }
 }

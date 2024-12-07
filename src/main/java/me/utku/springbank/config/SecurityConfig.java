@@ -43,13 +43,16 @@ public class SecurityConfig {
                 .authenticationProvider(authenticationProvider())
                 .securityContext(context -> context.securityContextRepository(securityContextRepository()))
                 .requestCache(RequestCacheConfigurer::disable)
-                .authorizeHttpRequests(req ->
-                        req.requestMatchers(
-                                        "/api/v1/auth/register/**",
-                                        "/api/v1/auth/login/**",
-                                        "/api/v1/auth/logout"
-                                ).permitAll()
-                                .anyRequest().authenticated()
+                .authorizeHttpRequests(req -> req
+                        .requestMatchers("/v3/api-docs/**",
+                                "/swagger-ui/**",
+                                "/swagger-ui.html").permitAll()
+                        .requestMatchers(
+                                "/api/v1/auth/register/**",
+                                "/api/v1/auth/login/**",
+                                "/api/v1/auth/logout"
+                        ).permitAll()
+                        .anyRequest().authenticated()
                 )
                 .logout(logout -> logout
                         .logoutUrl("/api/auth/logout")

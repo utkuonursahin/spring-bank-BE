@@ -3,7 +3,6 @@ package me.utku.springbank.service.transaction.action;
 import lombok.RequiredArgsConstructor;
 import me.utku.springbank.dto.account.AccountDto;
 import me.utku.springbank.dto.account.CashTransferRequest;
-import me.utku.springbank.dto.transaction.TransactionDto;
 import me.utku.springbank.enums.transaction.TransactionType;
 import me.utku.springbank.exception.OperationDeniedException;
 import me.utku.springbank.mapper.TransactionMapper;
@@ -21,13 +20,13 @@ public class CreateTransferTransactionAction {
     private final AuthService authService;
     private final AccountQueryService accountQueryService;
 
-    public TransactionDto execute(CashTransferRequest cashTransferRequest) {
+    public void execute(CashTransferRequest cashTransferRequest) {
         if (!checkSenderEligibility(cashTransferRequest)) {
             throw new OperationDeniedException("You are not allowed to perform this operation");
         }
         Transaction transaction = transactionMapper.toEntity(cashTransferRequest);
         transaction.setType(TransactionType.TRANSFER);
-        return transactionMapper.toDto(transactionRepository.save(transaction));
+        transactionMapper.toDto(transactionRepository.save(transaction));
     }
 
     public boolean checkSenderEligibility(CashTransferRequest cashTransferRequest) {
