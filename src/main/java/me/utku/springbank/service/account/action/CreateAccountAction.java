@@ -16,8 +16,9 @@ public class CreateAccountAction {
     private final AccountRepository accountRepository;
     private final AccountMapper accountMapper;
 
-    public AccountDto execute(User user) {
+    public AccountDto execute(User user, AccountDto accountDto) {
         Account account = Account.builder()
+                .accountType(accountDto.accountType())
                 .owner(user)
                 .cash(BigDecimal.valueOf(0.0))
                 .build();
