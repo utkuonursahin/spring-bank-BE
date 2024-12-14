@@ -13,6 +13,9 @@ import org.mapstruct.NullValuePropertyMappingStrategy;
 public interface CardMapper extends BaseMapper<Card> {
     Card toEntity(CardDto cardDto);
 
+    @Mapping(target = "isOpenToInternet", source = "openToInternet")
+    @Mapping(target = "isOpenToInternationalTransactions", source = "openToInternationalTransactions")
+    @Mapping(target = "isOpenToContactlessPayments", source = "openToContactlessPayments")
     CardDto toDto(Card card);
 
     Card updateEntity(@MappingTarget Card oldEntity, Card newEntity);

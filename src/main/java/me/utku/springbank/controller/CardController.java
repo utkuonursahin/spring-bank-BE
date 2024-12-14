@@ -1,6 +1,7 @@
 package me.utku.springbank.controller;
 
 import me.utku.springbank.dto.card.CardDto;
+import me.utku.springbank.dto.card.UpdateCardPinRequest;
 import me.utku.springbank.dto.card.UpdateCardSettingsRequest;
 import me.utku.springbank.generic.CrudController;
 import me.utku.springbank.generic.GenericResponse;
@@ -31,14 +32,17 @@ public class CardController extends CrudController<Card> {
     }
 
     @PostMapping("/me")
-    public GenericResponse<CardDto> createCard(@AuthenticationPrincipal User user, CardDto cardDto) {
+    public GenericResponse<CardDto> createCard(@AuthenticationPrincipal User user, @RequestBody CardDto cardDto) {
         return cardService.createCard(user, cardDto);
     }
 
     @PutMapping("/me")
-    public ResponseEntity<GenericResponse<CardDto>> updateCardSettings(@AuthenticationPrincipal User user, UpdateCardSettingsRequest updateCardSettingsRequest) {
+    public ResponseEntity<GenericResponse<CardDto>> updateCardSettings(@AuthenticationPrincipal User user, @RequestBody UpdateCardSettingsRequest updateCardSettingsRequest) {
         return cardService.updateCardSettings(user.getId(), updateCardSettingsRequest).toResponseEntity();
     }
 
-
+    @PutMapping("/me/pin")
+    public ResponseEntity<GenericResponse<CardDto>> updateCardPin(@AuthenticationPrincipal User user, @RequestBody UpdateCardPinRequest updateCardPinRequest) {
+        return cardService.updateCardPin(user.getId(), updateCardPinRequest).toResponseEntity();
+    }
 }

@@ -10,9 +10,16 @@ import java.util.UUID;
 public interface TransactionRepository extends JpaRepository<Transaction, UUID> {
     Page<Transaction> findAllBySender_IdOrReceiver_Id(UUID senderAccountId, UUID receiverAccountId, Pageable pageable);
 
-    Page<Transaction> findAllBySender_Owner_IdOrReceiver_Owner_Id(UUID ownerId, UUID receiverId, Pageable pageable);
+    Page<Transaction> findAllBySender_Owner_IdOrReceiver_Owner_IdOrderByCreatedAtDesc(UUID ownerId, UUID receiverId, Pageable pageable);
 
     Page<Transaction> findAllBySender_Owner_Id(UUID id, Pageable pageable);
 
     Page<Transaction> findAllByReceiverOwner_Id(UUID id, Pageable pageable);
+
+    Page<Transaction> findAllBySenderIdOrReceiverIdAndSender_Owner_IdOrReceiver_Owner_Id(UUID senderAccountId,
+                                                                                         UUID receiverAccountId,
+                                                                                         UUID senderOwnerId,
+                                                                                         UUID receiverOwnerId,
+                                                                                         Pageable pageable);
+
 }

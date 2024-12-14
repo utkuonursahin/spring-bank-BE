@@ -1,12 +1,12 @@
-package me.utku.springbank.service.user;
+package me.utku.springbank.service.user.action;
 
 import lombok.RequiredArgsConstructor;
-import me.utku.springbank.enums.auth.Role;
-import me.utku.springbank.model.User;
-import me.utku.springbank.mapper.UserMapper;
-import me.utku.springbank.repository.UserRepository;
 import me.utku.springbank.dto.user.UserDto;
 import me.utku.springbank.dto.user.UserRegisterDto;
+import me.utku.springbank.enums.auth.Role;
+import me.utku.springbank.mapper.UserMapper;
+import me.utku.springbank.model.User;
+import me.utku.springbank.repository.UserRepository;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -14,12 +14,12 @@ import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
-public class CreateUserService {
+public class CreateUserAction {
     private final UserRepository userRepository;
     private final UserMapper userMapper;
     private final BCryptPasswordEncoder passwordEncoder;
 
-    public UserDto createUser(UserRegisterDto userRegisterDto) {
+    public UserDto execute(UserRegisterDto userRegisterDto) {
         return userMapper.toDto(userRepository.save(this.buildUserFromRegisterDto(userRegisterDto)));
     }
 
