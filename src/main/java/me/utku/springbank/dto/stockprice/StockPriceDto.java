@@ -1,7 +1,8 @@
-package me.utku.springbank.model;
+package me.utku.springbank.dto.stockprice;
 
 import me.utku.springbank.dto.stock.StockDto;
 import me.utku.springbank.generic.BaseDto;
+import me.utku.springbank.model.StockPrice;
 
 import java.math.BigDecimal;
 import java.time.Instant;

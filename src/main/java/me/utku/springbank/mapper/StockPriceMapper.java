@@ -1,8 +1,8 @@
 package me.utku.springbank.mapper;
 
+import me.utku.springbank.dto.stockprice.StockPriceDto;
 import me.utku.springbank.generic.BaseMapper;
 import me.utku.springbank.model.StockPrice;
-import me.utku.springbank.model.StockPriceDto;
 import org.mapstruct.Builder;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;

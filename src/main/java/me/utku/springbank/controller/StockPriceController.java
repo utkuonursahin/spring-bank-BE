@@ -1,8 +1,8 @@
 package me.utku.springbank.controller;
 
 import lombok.RequiredArgsConstructor;
+import me.utku.springbank.dto.stockprice.StockPriceDto;
 import me.utku.springbank.generic.GenericResponse;
-import me.utku.springbank.model.StockPriceDto;
 import me.utku.springbank.service.stockprice.StockPriceService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;

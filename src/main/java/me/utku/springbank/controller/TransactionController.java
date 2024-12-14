@@ -54,4 +54,10 @@ public class TransactionController extends CrudController<Transaction> {
     public TransactionPageDto getUserTransactionsReceivedByUser(@AuthenticationPrincipal User user, @RequestParam int page, @RequestParam int size) {
         return transactionQueryService.getTransactionsReceivedByUser(user, page, size);
     }
+
+    @GetMapping("/me/account")
+    @PreAuthorize("hasRole('USER')")
+    public TransactionPageDto getUserAccountTransactions(@AuthenticationPrincipal User user, @RequestParam UUID accountId, @RequestParam int page, @RequestParam int size) {
+        return transactionQueryService.getUserAccountTransactions(user, accountId, page, size);
+    }
 }
