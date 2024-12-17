@@ -25,8 +25,8 @@ public class AccountStockController extends CrudController<AccountStock> {
         this.accountStockService = accountStockService;
     }
 
-    @GetMapping("/me")
-    public List<AccountStockDto> getAccountStocks(UUID accountId) {
+    @GetMapping("/me/{accountId}")
+    public List<AccountStockDto> getAccountStocks(@PathVariable UUID accountId) {
         return accountStockQueryService.getAccountStocks(accountId);
     }
 
@@ -36,12 +36,12 @@ public class AccountStockController extends CrudController<AccountStock> {
     }
 
     @PostMapping("/me")
-    public ResponseEntity<GenericResponse<AccountStockDto>> buyAccountStock(AccountStockDto accountStockDto) {
+    public ResponseEntity<GenericResponse<AccountStockDto>> buyAccountStock(@RequestBody AccountStockDto accountStockDto) {
         return accountStockService.buyAccountStock(accountStockDto).toResponseEntity();
     }
 
     @PutMapping("/me")
-    public ResponseEntity<GenericResponse<AccountStockDto>> sellAccountStock(AccountStockDto accountStockDto) {
+    public ResponseEntity<GenericResponse<AccountStockDto>> sellAccountStock(@RequestBody AccountStockDto accountStockDto) {
         return accountStockService.sellAccountStock(accountStockDto).toResponseEntity();
     }
 }

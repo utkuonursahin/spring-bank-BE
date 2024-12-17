@@ -42,4 +42,10 @@ public class AccountService {
         account.setCash(account.getCash().add(amount));
         accountRepository.save(account);
     }
+
+    public void decreaseCash(UUID accountId, BigDecimal amount) {
+        Account account = accountRepository.findById(accountId).orElseThrow(EntityNotFoundException::new);
+        account.setCash(account.getCash().subtract(amount));
+        accountRepository.save(account);
+    }
 }

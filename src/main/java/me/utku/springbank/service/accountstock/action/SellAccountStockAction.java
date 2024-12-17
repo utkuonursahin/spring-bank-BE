@@ -24,7 +24,7 @@ public class SellAccountStockAction {
 
     public GenericResponse<AccountStockDto> execute(AccountStockDto accountStockDto) {
         AccountStock accountStock = accountStockRepository.findByAccount_IdAndStock_Id(accountStockDto.account().id(), accountStockDto.stock().id()).orElseThrow(EntityNotFoundException::new);
-        BigDecimal stockValue = stockPriceQueryService.getStockPrice(accountStock.getStock().getId()).getStockPrice().multiply(accountStock.getQuantity());
+        BigDecimal stockValue = stockPriceQueryService.getStockPrice(accountStock.getStock().getId()).stockPrice().multiply(accountStock.getQuantity());
         accountService.increaseCash(accountStock.getAccount().getId(), stockValue);
 
         if (accountStock.getQuantity().equals(accountStockDto.quantity())) {
