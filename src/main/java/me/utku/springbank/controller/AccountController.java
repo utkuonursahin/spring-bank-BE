@@ -3,11 +3,8 @@ package me.utku.springbank.controller;
 import me.utku.springbank.dto.account.AccountDto;
 import me.utku.springbank.dto.account.CashTransferRequest;
 import me.utku.springbank.enums.account.AccountType;
-import me.utku.springbank.generic.CrudController;
 import me.utku.springbank.generic.GenericResponse;
-import me.utku.springbank.model.Account;
 import me.utku.springbank.model.User;
-import me.utku.springbank.service.account.AccountCrudService;
 import me.utku.springbank.service.account.AccountQueryService;
 import me.utku.springbank.service.account.AccountService;
 import org.springframework.http.ResponseEntity;
@@ -19,12 +16,11 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/account")
-public class AccountController extends CrudController<Account> {
+public class AccountController {
     private final AccountQueryService accountQueryService;
     private final AccountService accountService;
 
-    public AccountController(AccountCrudService accountCrudService, AccountQueryService accountQueryService, AccountService accountService) {
-        super(accountCrudService);
+    public AccountController(AccountQueryService accountQueryService, AccountService accountService) {
         this.accountQueryService = accountQueryService;
         this.accountService = accountService;
     }

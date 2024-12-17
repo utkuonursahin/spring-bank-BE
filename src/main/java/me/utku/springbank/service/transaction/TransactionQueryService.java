@@ -46,7 +46,7 @@ public class TransactionQueryService {
     }
 
     public TransactionPageDto getUserAccountTransactions(User user, UUID accountId, int page, int size) {
-        Page<Transaction> transactions = transactionRepository.findAllBySenderIdOrReceiverIdAndSender_Owner_IdOrReceiver_Owner_Id(accountId, accountId, user.getId(), user.getId(), PageRequest.of(page, size));
+        Page<Transaction> transactions = transactionRepository.findAllBySender_IdOrReceiver_IdAndSender_Owner_IdOrReceiver_Owner_IdOrderByCreatedAtDesc(accountId, accountId, user.getId(), user.getId(), PageRequest.of(page, size));
         return transactionMapper.toPageDto(transactions);
     }
 }
