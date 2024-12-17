@@ -30,7 +30,7 @@ public abstract class CrudController<Entity> {
     }
 
     @PostMapping
-    public ResponseEntity<GenericResponse<BaseDto<Entity>>> createEntity(BaseDto<Entity> dto) {
+    public ResponseEntity<GenericResponse<BaseDto<Entity>>> createEntity(@RequestBody BaseDto<Entity> dto) {
         return crudService.createEntity(dto).toResponseEntity();
     }
 

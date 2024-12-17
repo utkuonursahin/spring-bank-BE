@@ -5,6 +5,7 @@ import me.utku.springbank.dto.stockprice.StockPriceDto;
 import me.utku.springbank.generic.GenericResponse;
 import me.utku.springbank.service.stockprice.StockPriceService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,6 +18,7 @@ public class StockPriceController {
     private final StockPriceService stockPriceService;
 
     @PostMapping
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<GenericResponse<StockPriceDto>> createStockPrice(@RequestBody StockPriceDto stockPriceDto) {
         return stockPriceService.createStockPrice(stockPriceDto).toResponseEntity();
     }
