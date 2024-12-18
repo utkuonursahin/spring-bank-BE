@@ -16,10 +16,10 @@ public interface TransactionRepository extends JpaRepository<Transaction, UUID> 
 
     Page<Transaction> findAllByReceiverOwner_Id(UUID id, Pageable pageable);
 
-    Page<Transaction> findAllBySender_IdOrReceiver_IdAndSender_Owner_IdOrReceiver_Owner_IdOrderByCreatedAtDesc(UUID senderAccountId,
-                                                                                                               UUID receiverAccountId,
-                                                                                                               UUID senderOwnerId,
-                                                                                                               UUID receiverOwnerId,
-                                                                                                               Pageable pageable);
+    Page<Transaction> findAllBySender_IdOrReceiver_IdAndSender_Owner_IdAndReceiver_Owner_IdOrderByCreatedAtDesc(UUID senderAccountId,
+                                                                                                                UUID receiverAccountId,
+                                                                                                                UUID senderOwnerId,
+                                                                                                                UUID receiverOwnerId,
+                                                                                                                Pageable pageable);
 
 }

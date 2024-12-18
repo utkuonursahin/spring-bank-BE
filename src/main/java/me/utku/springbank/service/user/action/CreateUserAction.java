@@ -20,7 +20,8 @@ public class CreateUserAction {
     private final BCryptPasswordEncoder passwordEncoder;
 
     public UserDto execute(UserRegisterDto userRegisterDto) {
-        return userMapper.toDto(userRepository.save(this.buildUserFromRegisterDto(userRegisterDto)));
+        User user = this.buildUserFromRegisterDto(userRegisterDto);
+        return userMapper.toDto(userRepository.save(user));
     }
 
     private User buildUserFromRegisterDto(UserRegisterDto userRegisterDto) {
