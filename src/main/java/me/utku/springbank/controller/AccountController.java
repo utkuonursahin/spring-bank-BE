@@ -1,7 +1,9 @@
 package me.utku.springbank.controller;
 
 import me.utku.springbank.dto.account.AccountDto;
+import me.utku.springbank.dto.account.CashDepositRequest;
 import me.utku.springbank.dto.account.CashTransferRequest;
+import me.utku.springbank.dto.account.CashWithdrawRequest;
 import me.utku.springbank.enums.account.AccountType;
 import me.utku.springbank.generic.GenericResponse;
 import me.utku.springbank.model.User;
@@ -47,5 +49,17 @@ public class AccountController {
     @PreAuthorize("hasRole('USER')")
     public ResponseEntity<GenericResponse<AccountDto>> transferAccountCash(@RequestBody CashTransferRequest cashTransferRequest) {
         return accountService.transferCash(cashTransferRequest).toResponseEntity();
+    }
+
+    @PostMapping("/me/deposit")
+    @PreAuthorize("hasRole('USER')")
+    public ResponseEntity<GenericResponse<AccountDto>> depositAccountCash(@AuthenticationPrincipal User user, @RequestBody CashDepositRequest cashDepositRequest) {
+        return accountService.depositCash(user.getId(), cashDepositRequest).toResponseEntity();
+    }
+
+    @PostMapping("/me/withdraw")
+    @PreAuthorize("hasRole('USER')")
+    public ResponseEntity<GenericResponse<AccountDto>> withdrawAccountCash(@AuthenticationPrincipal User user, @RequestBody CashWithdrawRequest cashWithdrawRequest) {
+        return accountService.withdrawCash(user.getId(), cashWithdrawRequest).toResponseEntity();
     }
 }
